@@ -44,6 +44,12 @@ lib/Gapp/Form/Context/Node.pm
 lib/Gapp/Form/Stash.pm
 lib/Gapp/FormButtons.pm
 lib/Gapp/Frame.pm
+lib/Gapp/Gtk2.pm
+lib/Gapp/Gtk2/DateEntry.pm
+lib/Gapp/Gtk2/Model/List.pm
+lib/Gapp/Gtk2/Model/SimpleList.pm
+lib/Gapp/Gtk2/Model/Tree.pm
+lib/Gapp/Gtk2/TimeEntry.pm
 lib/Gapp/HBox.pm
 lib/Gapp/HButtonBox.pm
 lib/Gapp/HPaned.pm
@@ -186,6 +192,10 @@ t/0003-gapp-widget-wth-traits.t
 t/0004_layout.t
 t/0005_util.t
 t/0006_actions_util.t
+t/001_gtk_date_entry.t
+t/002_gtk_time_entry.t
+t/003_gtk_list.t
+t/004_gtk_simple_list.t
 t/0101_window.t
 t/0102_dialog.t
 t/0103_hbox.t
