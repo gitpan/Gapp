@@ -6,7 +6,6 @@ FormContext
 FormField
 FormStash
 GappAction
-GappAction
 GappActionOrArrayRef
 GappCallback
 GappCellRenderer
@@ -83,7 +82,7 @@ type Form,
 # FormField
 subtype FormField,
     as GappWidget,
-    where { $_->does('Gapp::Meta::Widget::Native::Trait::FormField') };
+    where { $_->does('Gapp::Meta::Widget::Native::Role::FormField') };
 
 # FormContext
 class_type FormContext,
@@ -92,11 +91,6 @@ class_type FormContext,
 # FormContext
 class_type FormStash,
     { class => 'Gapp::Form::Stash' };
-
-
-# GappAction
-class_type GappAction,
-    { class => 'Gapp::Action' };
 
 # GappCellRenderer
 class_type GappCellRenderer,
@@ -107,6 +101,7 @@ class_type GappCellRenderer,
         'text'   => [ 'Gtk2::CellRendererText', 'text' ],
         'markup' => [ 'Gtk2::CellRendererText', 'markup' ],
         'toggle' => [ 'Gtk2::CellRendererToggle', 'active' ],
+        'pixbuf' => [ 'Gtk2::CellRendererPixbuf', 'pixbuf']
     );
 
     coerce GappCellRenderer,
@@ -114,7 +109,7 @@ class_type GappCellRenderer,
         via {
             if ( exists $RENDERERS{ $_ } ) {
                 my ( $c, $p ) = ( @{ $RENDERERS{ $_ } } );
-                'Gapp::CellRenderer'->new( class => $c, property => $p );
+                'Gapp::CellRenderer'->new( gclass => $c, property => $p );
             }
         };
     
@@ -124,7 +119,7 @@ class_type GappCellRenderer,
     
     coerce GappCellRenderer,
         from ArrayRef,
-        via { 'Gapp::CellRenderer'->new( class => $_->[0], property => $_->[1] ) };
+        via { 'Gapp::CellRenderer'->new( gclass => $_->[0], property => $_->[1] ) };
 
 
 # GappTableMap
@@ -134,7 +129,7 @@ class_type GappLayout,
 coerce GappLayout,
     from Str,
     via { $_->Layout };
-
+    
 # GappTableMap
 class_type GappTableMap,
     { class => 'Gapp::TableMap' };
@@ -159,7 +154,7 @@ coerce GappTreeViewColumn,
         $args{name} = $input->[0] if defined $input->[0];
         $args{title} = $input->[1] if defined $input->[1];
         $args{renderer} = $input->[2] || 'text';
-        $args{data_column} = $input->[3];
+        $args{data_column} = $input->[3] if defined $input->[3] ;
         
         # determine how to display the content
         if ( defined $input->[4] ) {
@@ -178,9 +173,7 @@ coerce GappUIManager,
     from HashRef,
     via { 'Gapp::UIManager'->new( %$_ ) };
 
-# GappWidget
-class_type GappWidget,
-    { class => 'Gapp::Widget' };
+
 
 
 1;

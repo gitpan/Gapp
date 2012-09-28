@@ -10,7 +10,7 @@ extends 'Gapp::Container';
 use Gapp::TableMap;
 use Gapp::Types qw( GappTableMap );
 
-has '+class' => (
+has '+gclass' => (
     default => 'Gtk2::Table',
 );
 
@@ -41,7 +41,7 @@ sub next_cell {
 }
 
 
-before _construct_gtk_widget => sub {
+before _construct_gobject => sub {
 	my $self = shift;
 	return $self->set_args( [ $self->map->row_count, $self->map->col_count, 0 ] );
 };
@@ -109,7 +109,7 @@ See L<Gapp::TableMap> for more information on drawing tables.
 
 =item isa: L<Gapp::TableMap>
 
-=item coerceions: Str
+=item coercions: Str
 
 =back
 
@@ -121,7 +121,7 @@ Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
 
 =head1 COPYRIGHT & LICENSE
 
-    Copyright (c) 2011 Jeffrey Ray Hallock.
+    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
 
     This program is free software; you can redistribute it and/or
     modify it under the same terms as Perl itself.

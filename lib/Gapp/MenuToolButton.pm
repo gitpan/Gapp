@@ -3,20 +3,16 @@ package Gapp::MenuToolButton;
 use Moose;
 use MooseX::SemiAffordanceAccessor;
 extends 'Gapp::ToolButton';
+with 'Gapp::Meta::Widget::Native::Role::HasMenu';
 
-has '+class' => (
+has '+gclass' => (
     default => 'Gtk2::MenuToolButton',
 );
 
-has 'menu' => (
-    is => 'rw',
-    isa => 'Gapp::Menu',
-);
-
-after '_construct_gtk_widget' => sub {
-    my ( $self ) = @_;
-    $self->gtk_widget->set_menu( $self->menu->gtk_widget ) if $self->menu;
-};
+#after '_construct_gobject' => sub {
+#    my ( $self ) = @_;
+#    $self->gobject->set_menu( $self->menu->gobject ) if $self->menu;
+#};
 
 1;
 
@@ -34,7 +30,9 @@ Gapp::MenuToolButton - MenuToolButton Widget
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
+
+=item +-- L<Gapp::Widget>
 
 =item ....+-- L<Gapp::ToolItem>
 
@@ -44,17 +42,11 @@ Gapp::MenuToolButton - MenuToolButton Widget
 
 =back
 
-=head1 PROVIDED ATTRIBUTES
+=head2 Roles
 
 =over 4
 
-=item B<menu>
-
-=over 4
-
-=item isa GappMenu
-
-=back
+=item L<Gapp::Meta::Widget::Native::Role::HasMenu>
 
 =back
 
@@ -64,7 +56,7 @@ Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
 
 =head1 COPYRIGHT & LICENSE
 
-    Copyright (c) 2011 Jeffrey Ray Hallock.
+    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
 
     This program is free software; you can redistribute it and/or
     modify it under the same terms as Perl itself.

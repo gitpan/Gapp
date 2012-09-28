@@ -1,16 +1,16 @@
 package Gapp::TreeViewColumn;
 
 use Moose;
-extends 'Gapp::Widget';
+extends 'Gapp::Object';
 
 use Gapp::CellRenderer;
 use Gapp::Util;
 use Gapp::Types qw( GappCellRenderer GappTreeViewColumn );
 
 use Moose::Util;
-use MooseX::Types::Moose qw( Str ArrayRef HashRef CodeRef );
+use MooseX::Types::Moose qw( Str ArrayRef HashRef CodeRef Undef );
 
-has '+class' => (
+has '+gclass' => (
     default => 'Gtk2::TreeViewColumn',
 );
 
@@ -22,15 +22,15 @@ has 'name' => (
 
 has 'renderer' => (
     is => 'rw',
-    isa => GappCellRenderer,
-    default => sub { Gapp::CellRenderer->new( class => 'Gtk2::CellRendererText', property => 'markup' ) },
+    isa => GappCellRenderer|Undef,
+    default => sub { Gapp::CellRenderer->new( gclass => 'Gtk2::CellRendererText', property => 'markup' ) },
     coerce => 1,
 );
 
 has 'data_column' => (
     is => 'rw',
     isa => 'Int|Undef',
-    default => undef,
+    default => 0,
 );
 
 has 'data_func' => (
@@ -44,10 +44,10 @@ has 'sort_enabled' => (
     default => 0,
     trigger => sub {
         my ( $self ) = @_;
-        if ( $self->has_gtk_widget ) {
-            $self->gtk_widget->set_clickable( 1 );
-            $self->gtk_widget->signal_connect( 'clicked', sub {
-                $self->gtk_widget->get_tree_view->get_model->set_default_sort_func( sub {
+        if ( $self->has_gobject ) {
+            $self->gobject->set_clickable( 1 );
+            $self->gobject->signal_connect( 'clicked', sub {
+                $self->gobject->get_tree_view->get_model->set_default_sort_func( sub {
                     my ( $model, $itera, $iterb, $self ) = @_;
                     my $a = $model->get( $itera, $self->data_column );
                     my $b = $model->get( $iterb, $self->data_column );
@@ -64,8 +64,7 @@ has 'sort_func' => (
     default => sub {
         sub {
             my ( $self, $a, $b ) = @_;
-            print $self->get_cell_value( $a ), " cmp ",  $self->get_cell_value( $b ), "\n";
-            lc $self->get_cell_value( $a ) cmp lc $self->get_cell_value( $b )
+            lc $self->get_cell_value( $a ) cmp lc $self->get_cell_value( $b );
         };
     },
 );
@@ -75,10 +74,12 @@ sub BUILDARGS {
     my $class = shift;
     my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;
     
-    if ( exists $args{title} ) {
-        $args{properties}{title} = $args{title};
-        delete $args{title};
+    
+    for my $att ( qw(alignment clickable expand fixed_width min_width reordable resizable sizing),
+                  qw(sort_column_id sort_indicator sort_order spacing title visible width') ) {
+        $args{properties}{$att} = delete $args{$att} if exists $args{$att};
     }
+    
     __PACKAGE__->SUPER::BUILDARGS( %args );
 }
 
@@ -116,7 +117,7 @@ Gapp::TreeViewColumn - TreeViewColumn Widget
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
 =item +-- L<Gapp::TreeViewColumn>
 
@@ -136,6 +137,10 @@ Gapp::TreeViewColumn - TreeViewColumn Widget
 
 =back
 
+The column in the model that to pull data from. This is what will be displayed within the
+renderer. You can use the C<data_func> attribute to manipulate the data before it is rendered
+in the cell.
+
 =item B<data_func>
 
 =over 4
@@ -143,6 +148,10 @@ Gapp::TreeViewColumn - TreeViewColumn Widget
 =item isa: Str|CodeRef|Undef
 
 =back
+
+Use this to manipulate the data from C<data_column> before rendering it in the cell. The return value
+is what will be passed to the renderer. The <$_> variable will be set to the data from C<data_column>
+within the callback.
 
 =item B<name>
 
@@ -154,33 +163,49 @@ Gapp::TreeViewColumn - TreeViewColumn Widget
 
 =back
 
+By naming your column you can use C<$treeview->find_column( $name )> to retrieve them later.
+
 =item B<renderer>
 
 =over 4
 
 =item isa: L<Gapp::CellRenderer>
 
-=item default: Gapp::CellRenderer->new( class => 'Gtk2::CellRendererText', property => 'markup' );
+=item default: Gapp::CellRenderer->new( gclass => 'Gtk2::CellRendererText', property => 'markup' );
 
 =back
 
-=item B<values>
+=head1 DELEGATED PROPERIES
 
 =over 4
 
-=item isa: ArrayRef
+=item B<alignment>
 
-=back
+=item B<clickable>
 
-=back
+=item B<expand>
 
-=head1 DELEGATES TO GTK
+=item B<fixed_width>
 
-=head2 Attributes
+=item B<min_width>
 
-=over 4
+=item B<reorderable>
+
+=item B<resizable>
+
+=item B<sizing>
+
+=item B<sort_column_id>
+
+=item B<sort_indicator>
+
+=item B<sort_order>
+
+=item B<spacing>
 
 =item B<title>
+
+=item B<visible_width>
 
 =back 
 
@@ -190,7 +215,7 @@ Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
 
 =head1 COPYRIGHT & LICENSE
 
-    Copyright (c) 2011 Jeffrey Ray Hallock.
+    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
 
     This program is free software; you can redistribute it and/or
     modify it under the same terms as Perl itself.

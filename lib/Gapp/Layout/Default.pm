@@ -6,21 +6,23 @@ use warnings;
 use Gapp::Util qw( replace_entities );
 use Gapp::Actions::Util qw( actioncb parse_action);
 use Gapp::Types qw( GappAction GappActionOrArrayRef );
-use MooseX::Types::Moose qw( ArrayRef CodeRef Str );
+use MooseX::Types::Moose qw( ArrayRef CodeRef Object Str );
+
+use Carp qw( confess );
 
 # Assistant
 
 build 'Gapp::Assistant', sub {
     my ( $l, $w ) = @_;
-    $w->gtk_widget->set_icon( $w->gtk_widget->render_icon( $w->icon, 'dnd' ) ) if $w->icon;
+    $w->gobject->set_icon( $w->gobject->render_icon( $w->icon, 'dnd' ) ) if $w->icon;
     
     if ( $w->forward_page_func ) {
 	
 	my ( $cb, @args ) = parse_action $w->forward_page_func;
 	
-	$w->gtk_widget->set_forward_page_func( sub {
+	$w->gobject->set_forward_page_func( sub {
 	    my ( $pagenum, $w ) = @_;
-	    $cb->( $w, \@args, $w->gtk_widget, [$pagenum] );
+	    $cb->( $w, \@args, $w->gobject, [$pagenum] );
 	}, $w);
     }
 };
@@ -28,79 +30,98 @@ build 'Gapp::Assistant', sub {
 
 # Assistnat Page
 
-build 'Gapp::AssistantPage', sub {
-    my ( $l, $w ) = @_;
+add 'Gapp::Widget', to 'Gapp::Assistant', sub {
+    my ( $l, $w, $c) = @_;
+    
+    if ( ! $w->does('Gapp:Meta::Widget::Native::Trait::AssistantPage') ) {
+	use Carp;
+	carp qq[$w does not have the AssistantPage trait applied. Any widget added to ]. 
+	qq[an assistant must have the AssistntPage trait.];
+    }
+
+    my $gtk_w = $w->gwrapper;
+    
+    my $assistant = $c->gobject;
+   
+    my $page_num = $assistant->append_page( $w->grwrapper );
+    $w->set_page_num( $page_num );
+    
+    $assistant->set_page_title     ($w->gwrapper , $w->page_title );
+    $assistant->set_page_side_image($w->gwrapper , $assistant->render_icon( $w->page_icon , 'dnd' ) ) if $w->page_icon;
+    $assistant->set_page_type      ($w->gwrapper , $w->page_type );
+    $assistant->set_page_complete  ($w->gwrapper , 1);
+    $assistant->{pages}{$w->page_name} = $w if $w->page_name;
 };
 
-add 'Gapp::AssistantPage', to 'Gapp::Assistant', sub {
-   my ( $l, $w, $c) = @_;
-   
-    my $gtk_w = $w->gtk_widget;
-    my $assistant = $c->gtk_widget;
-   
-    my $page_num = $assistant->append_page( $gtk_w );
-    $w->set_num( $page_num );
-    $assistant->set_page_title     ($gtk_w, $w->title );
-    $assistant->set_page_side_image($gtk_w, $assistant->render_icon( $w->icon , 'dnd' ) ) if $w->icon;
-    $assistant->set_page_type      ($gtk_w, $w->type );
-    $assistant->set_page_complete  ($gtk_w, 1);
-    $assistant->{pages}{$w->name} = $gtk_w;  
-};
+
+
+# Button
+
+#style 'Gapp::Button', sub {
+#    my ( $l, $w ) = @_;
+#    
+#    my ( $action, @args ) = parse_action ( $w->action );
+#    
+#    if ( is_GappAction ( $action ) && $action->mnemonic ) {
+#	if ( ! $w->label && ! $w->mnemonic ) {
+#	    $w->set_mnemonic( $action->mnemonic );
+#	    $w->set_constructor( 'new_with_mnemonic' );
+#	    $w->set_args( [ $action->mnemonic ] );
+#	}
+#    }
+#};
 
 build 'Gapp::Button', sub {
     my ( $l, $w ) = @_;
-    my $gtkw = $w->gtk_widget;
+    my $gtkw = $w->gobject;
     
-    my ( $label, $image, $tooltip );
-    
-    if ( $w->icon ) {
-	$image = Gtk2::Image->new_from_stock( $w->icon, 'button' );
-    }
+    my ( $image );
     if ( $w->image ) {
-	$image = $w->image->gtk_widget;
+	$image = $w->image->gobject;
+    }
+    elsif ( $w->icon ) {
+	$image = Gtk2::Image->new_from_stock( $w->icon, $w->icon_size || 'button' );
     }
     
-    if ( $w->action ) {
-	my ( $action, @args );
-	
-	if ( is_ArrayRef( $w->action ) ) {
-	    ( $action, @args ) = @{ $w->action };
-	}
-	else {
-	    $action = $w->action;
-	}
-	
-        $label = defined $w->label ? $w->label : $action->label;
-	$image ||= $action->create_gtk_image( 'button' );
-	$tooltip = defined $w->tooltip ? $w->tooltip : $action->tooltip;
-	
-	$gtkw->signal_connect( clicked => sub {
-	    my ( $gtkw, @gtkargs ) = @_;
-	    $action->perform( $w, \@args, $gtkw, \@gtkargs );
-	});
+
+    
+    $gtkw->set_label( $w->label ) if defined $w->label && ! defined $w->mnemonic;
+    $gtkw->set_image( $image ) if defined $image;
+    $gtkw->set_tooltip_text( $w->tooltip ) if defined $w->tooltip;
+};
+
+
+paint 'Gapp::Button', sub {
+    my ( $l, $w ) = @_;
+    return if ! $w->action;
+    
+    my ( $action, @args ) = parse_action ( $w->action );
+    
+   
+    if ( is_CodeRef $action ) {
+	$w->signal_connect( 'clicked', $action, @args );
     }
     else {
-	$label = $w->label;
-	$tooltip = $w->tooltip;
+	my $gtkw = $w->gobject;
+	$gtkw->set_label( $action->label ) if ! defined $w->mnemonic && ! defined $w->label && defined $action->label;
+	$gtkw->set_image( $action->create_gtk_image( 'button' ) ) if ! defined $w->icon && ! defined $w->image && defined $action->icon;
+	$gtkw->set_tooltip_text( $action->tooltip ) if ! defined $w->tooltip && defined $action->tooltip;
+	$gtkw->signal_connect( clicked => actioncb( $action, $w, \@args ) );
     }
-    
-    $gtkw->set_label( $label ) if defined $label;
-    $gtkw->set_image( $image ) if defined $image;
-    $gtkw->set_tooltip_text( $tooltip ) if defined $tooltip;
 };
 
 # ComboBox
 
 build 'Gapp::ComboBox', sub {
     my ( $l, $w ) = @_;
-    my $gtkw = $w->gtk_widget;
+    my $gtkw = $w->gobject;
     
-    my $model = $w->model->isa('Gapp::Widget') ? $w->model->gtk_widget : $w->model;
+    my $model = $w->model->isa('Gapp::Object') ? $w->model->gobject : $w->model;
     
     # populate the module with values
     if ( $w->values ) {
         
-        my $model = $w->model->isa('Gapp::Widget') ? $w->model->gtk_widget : $w->model;
+        my $model = $w->model->isa('Gapp::Object') ? $w->model->gobject : $w->model;
         
         my @values = is_CodeRef($w->values) ? &{$w->values}($w) : @{$w->values};
         $model->append( $_ ) for ( @values );
@@ -110,7 +131,7 @@ build 'Gapp::ComboBox', sub {
     $gtkw->set_model( $model );
     
     # create the renderer to display the values
-    my $gtkr = $w->renderer->gtk_widget;
+    my $gtkr = $w->renderer->gobject;
     $gtkw->{renderer} = $gtkr;
     
     # add the renderer to the column
@@ -138,7 +159,7 @@ build 'Gapp::ComboBox', sub {
             local $_ = $value;
             
             if ( is_CodeRef( $w->data_func ) ) {
-                $value = &{ $w->data_func }( @_ );
+                $value = &{ $w->data_func }( $_ );
             }
             elsif ( is_Str( $w->data_func ) ) {
                 my $method = $w->data_func;
@@ -156,40 +177,67 @@ build 'Gapp::ComboBox', sub {
 
 build 'Gapp::Dialog', sub {
     my ( $l, $w ) = @_;
-    my $gtk_w = $w->gtk_widget;
-    $w->gtk_widget->set_icon( $w->gtk_widget->render_icon( $w->icon, 'dnd' ) ) if $w->icon;
-    $w->gtk_widget->set_position( $w->position ) if $w->position;
-    $w->gtk_widget->set_transient_for( $w->transient_for->gtk_widget ) if $w->transient_for;
+    my $gtk_w = $w->gobject;
+    $w->gobject->set_icon( $w->gobject->render_icon( $w->icon, 'dnd' ) ) if $w->icon;
+    $w->gobject->set_transient_for( $w->transient_for->gobject ) if $w->transient_for;
     
-    my $i = 0;
     if ( $w->action_widgets ) {
-	for my $b ( @{ $w->action_widgets } ) {
-	    $gtk_w->add_action_widget( $b->gtk_widget, $i );
-	    $i++;
+	
+	while ( @{$w->action_widgets} ) {
+	    my $b = shift @{$w->action_widgets};
+	    my $r = shift @{$w->action_widgets};
+	    $gtk_w->add_action_widget( $b->gobject, $r );
 	}
     }
     if ( $w->buttons ) {
-	for my $b ( @{ $w->buttons } ) {
-	    $gtk_w->add_button( $b, $i );
-	    $i++;
+	while ( @{$w->buttons} ) {
+	    my $b = shift @{$w->buttons};
+	    my $r = shift @{$w->buttons};
+	    
+	    if ( is_Object( $b ) ) {
+		$gtk_w->add_action_widget( $b->gobject, $r );
+	    }
+	    else {
+		$gtk_w->add_button( $b, $r );
+	    }
+	    
 	}
     }
+
+};
+
+
+style 'Gapp::Entry', sub {
+    my ( $l, $w ) = @_;
+    $w->properties->{activates_default} ||= 1;
 };
 
 # FileChooserDialog
 
 build 'Gapp::FileChooserDialog', sub {
     my ( $l, $w ) = @_;
-    my $gtk_w = $w->gtk_widget;
-    $w->gtk_widget->set_icon( $w->gtk_widget->render_icon( $w->icon, 'dnd' ) ) if $w->icon;
-    $w->gtk_widget->set_position( $w->position ) if $w->position;
-    $w->gtk_widget->set_transient_for( $w->transient_for->gtk_widget ) if $w->transient_for;
-    my $i = 0; for my $b ( @{ $w->buttons } ) {
-        $gtk_w->add_button( $b, $i );
-        $i++;
-    }
+    my $gtk_w = $w->gobject;
+    $w->gobject->set_icon( $w->gobject->render_icon( $w->icon, 'dnd' ) ) if $w->icon;
+    $w->gobject->set_transient_for( $w->transient_for->gobject ) if $w->transient_for;
     
-    map { $w->gtk_widget->add_filter( $_->gtk_widget ) } $w->filters;
+    if ( $w->action_widgets ) {
+	
+	while ( @{$w->action_widgets} ) {
+	    my $b = shift @{$w->action_widgets};
+	    my $r = shift @{$w->action_widgets};
+	    $gtk_w->add_action_widget( is_Object($b) ? $b->gobject : $b, $r );
+	}
+    }
+    if ( $w->buttons ) {
+	while ( @{$w->buttons} ) {
+	    my $b = shift @{$w->buttons};
+	    my $r = shift @{$w->buttons};
+	    $gtk_w->add_button( is_Object($b) ? $b->gobject : $b, $r );
+	}
+    }
+
+    
+    map { $w->gobject->add_filter( $_->gobject ) } $w->filters;
 };
 
 # FileFilter
@@ -197,7 +245,7 @@ build 'Gapp::FileChooserDialog', sub {
 build 'Gapp::FileFilter', sub {
     my ( $l, $w ) = @_;
     
-    my $gtkw = $w->gtk_widget;
+    my $gtkw = $w->gobject;
     $gtkw->set_name( $w->name );
     map { $gtkw->add_pattern( $_ ) } $w->patterns;
     map { $gtkw->add_mime_type( $_ ) } $w->mime_types; 
@@ -209,17 +257,26 @@ build 'Gapp::FileFilter', sub {
 build 'Gapp::Label', sub {
     my ( $l, $w ) = @_;
 
-    my $gtkw = $w->gtk_widget;
+    my $gtkw = $w->gobject;
     $gtkw->set_text( $w->text ) if defined $w->text;
     $gtkw->set_markup( $w->markup ) if defined $w->markup;
 };
+
+# List
+
+build 'Gapp::Model::List', sub {
+    my ( $l, $w ) = @_;
+    map { $w->gobject->append_record( @$_ ) } @{ $w->content };
+};
+
+
 
 # Image
 
 build 'Gapp::Image', sub {
     my ( $l, $w ) = @_;
     
-    my $gtkw = $w->gtk_widget;
+    my $gtkw = $w->gobject;
     if ( $w->stock ) {
         $gtkw->set_from_stock( $w->stock->[0], $w->stock->[1] );
     }
@@ -227,128 +284,237 @@ build 'Gapp::Image', sub {
 
 # ImageMenuItem
 
+#style 'Gapp::ImageMenuItem', sub {
+#    my ( $l, $w ) = @_;
+#    
+#    my ( $action, @args ) = parse_action ( $w->action );
+#    
+#    
+#    
+#    if ( is_GappAction ( $action ) && $action->mnemonic ) {
+#	
+#	if ( ! $w->label && ! $w->mnemonic ) {
+#	    
+#	    $w->set_mnemonic( $action->mnemonic );
+#	    $w->set_constructor( 'new_with_mnemonic' );
+#	    $w->set_args( [ $action->mnemonic ] );
+#	    
+#	    $w->_construct_gobject;
+#	}
+#    }
+#};
+
+
+
 build 'Gapp::ImageMenuItem', sub {
     my ( $l, $w ) = @_;
-    my $gtkw = $w->gtk_widget;
+    my $gtkw = $w->gobject;
     
-    my ( $label, $icon, $tooltip );
-    $label = $w->label;
-    $icon = $w->icon;
-    $tooltip = $w->tooltip;
+    my ( $image );
     
-    my ( $action, @args ) = parse_action( $w->action );
-    
-    if ( is_CodeRef($action) ) {
-	$gtkw->signal_connect( 'activate', $action, \@args );
+    if ( $w->icon ) {
+	$image = Gtk2::Image->new_from_stock( $w->icon, 'menu' );
     }
-    elsif ( is_GappAction( $action) ) {
-	$icon = $action->icon if ! defined $icon;
-	$label = $action->label if ! defined $label;
-	$tooltip = $action->tooltip if ! defined $tooltip;
+    if ( $w->image ) {
+	$image = $w->image->gobject;
+    }
+    
+    $gtkw->set_label( $w->label ) if defined $w->label && ! defined $w->mnemonic;
+    $gtkw->set_image( $image ) if defined $image;
+    $gtkw->set_tooltip_text( $w->tooltip ) if defined $w->tooltip;
+    
+    if ( $w->menu ) {
+	$gtkw->set_submenu( $w->menu->gobject );
+    }
+};
+
+paint 'Gapp::ImageMenuItem', sub {
+    my ( $l, $w ) = @_;
+    return if ! $w->action;
+    
+    #print $w, $w->mnemonic, "\n";
+    
+    my ( $action, @args ) = parse_action ( $w->action );
+    
+    if ( is_CodeRef $action ) {
+	$w->signal_connect( 'activate', $action, \@args );
+    }
+    else {
+	my $gtkw = $w->gobject;
+	
+	$gtkw->set_label( $action->label ) if ! defined $w->label  && ! defined $w->mnemonic && defined $action->label;
+	$gtkw->set_image( $action->create_gtk_image( 'menu' ) ) if ! $w->icon && ! defined $w->image && defined $action->icon;
+	$gtkw->set_tooltip_text( $action->tooltip ) if ! defined $w->tooltip && defined $action->tooltip;
 	$gtkw->signal_connect( activate => actioncb( $action, $w, \@args ) );
     }
-    
-    $gtkw->get_child->set_text( $label ) if defined $label;
-    $gtkw->set_tooltip_text( $w->tooltip ) if defined $w->tooltip;
-    $gtkw->set_image( Gtk2::Image->new_from_stock( $icon, 'menu' ) ) if defined $icon;
 };
-
-add 'Gapp::MenuItem', to 'Gapp::Menu', sub {
-    my ( $l, $w, $c ) = @_;
-    $c->gtk_widget->append( $w->gtk_widget );
-    $c->gtk_widget->show;
-};
-
-
 
 
 
 
 # MenuItem
+#style 'Gapp::MenuItem', sub {
+#    my ( $l, $w ) = @_;
+#    
+#    my ( $action, @args ) = parse_action ( $w->action );
+#    
+#    if ( is_GappAction ( $action ) && $action->mnemonic ) {
+#	if ( ! $w->label && ! $w->mnemonic ) {
+#	    $w->set_constructor( 'new_with_mnemonic' );
+#	    $w->set_args( [ $action->mnemonic ] );
+#	}
+#    }
+#};
+
 
 build 'Gapp::MenuItem', sub {
     my ( $l, $w ) = @_;
-    $w->gtk_widget->get_child->set_text( $w->label ) if $w->label;
+    my $gtkw = $w->gobject;
+        
+    $gtkw->set_label( $w->label ) if defined $w->label && ! defined $w->mnemonic;
+    $gtkw->set_tooltip_text( $w->tooltip ) if defined $w->tooltip;
+    
+    if ( $w->menu ) {
+	$gtkw->set_submenu( $w->menu->gobject );
+    }
 };
+
+paint 'Gapp::MenuItem', sub {
+    my ( $l, $w ) = @_;
+    return if ! $w->action;
+    
+    my ( $action, @args ) = parse_action ( $w->action );
+    
+    if ( is_CodeRef $action ) {
+	$w->signal_connect( 'activate', $action, \@args );
+    }
+    else {
+	my $gtkw = $w->gobject;
+	$gtkw->set_label( $action->label ) if ! defined $w->label && ! defined $w->mnemonic && defined $action->label;
+	$gtkw->set_tooltip_text( $action->tooltip ) if ! defined $w->tooltip && defined $action->tooltip;
+	$gtkw->signal_connect( activate => actioncb( $action, $w, \@args ) );
+    }
+};
+
 
 add 'Gapp::MenuItem', to 'Gapp::MenuShell', sub {
     my ( $l, $w, $c ) = @_;
-    $c->gtk_widget->append( $w->gtk_widget );
-    $c->gtk_widget->show;
+    $c->gobject->append( $w->gwrapper );
+    $c->gobject->show;
 };
 
 
 # ToolButton
 
+style 'Gapp::MenuToolButton', sub {
+    my ( $l, $w ) = @_;
+    
+    my $image = $w->image ?
+    $w->image->gobject :
+    Gtk2::Image->new_from_stock( 'gtk-dialog-error' , $w->icon_size || 'large-toolbar' );
+    
+    $w->set_args( [ $image, defined $w->label ? $w->label : ''  ] );
+};
+
+
 build 'Gapp::MenuToolButton', sub {
     my ( $l, $w ) = @_;
-    my $gtkw = $w->gtk_widget;
+    my $gtkw = $w->gobject;
+    
+    $w->gobject->set_menu( $w->menu->gobject ) if $w->menu;
     
     $gtkw->set_stock_id( $w->stock_id ) if $w->stock_id;
     $gtkw->set_label( $w->label ) if defined $w->label;
     $gtkw->set_tooltip_text( $w->tooltip ) if defined $w->tooltip;
     
-    my $action = is_ArrayRef( $w->action ) ? $w->action->[0] : $w->action;
-    my ( $cb, @args );
-    @args = is_ArrayRef( $w->action ) ? @{$w->action} : ();
-    shift @args;
-    
-    if ( is_CodeRef($action) ) {
-	$cb = $action;
-	$gtkw->signal_connect( 'clicked', $cb, \@args );
-    }
-    elsif ( is_GappAction( $action) ) {
-	$gtkw->set_stock_id( $action->icon ) if $action->icon;
-	$gtkw->set_label( $action->label ) if $action->label;
-	$gtkw->set_tooltip_text( $action->tooltip ) if defined $action->tooltip;
-	
-	$gtkw->signal_connect( clicked => actioncb( $action, $w, \@args ) );
-    }
-    
-    $w->menu->gtk_widget->show_all;
-    $w->gtk_widget->set_menu( $w->menu->gtk_widget ) if $w->menu;
+    $w->menu->gwrapper->show_all if $w->menu;
 };
 
+paint 'Gapp::MenuToolButton', sub {
+    my ( $l, $w ) = @_;
+    return if ! $w->action;
+    
+    my ( $action, @args ) = parse_action ( $w->action );
+    
+    if ( is_CodeRef $action ) {
+	$w->signal_connect( 'clicked', $action, \@args );
+    }
+    else {
+	my $gtkw = $w->gobject;
+	$gtkw->set_label( $action->label ) if ! defined $w->label && defined $action->label;
+	$gtkw->set_icon_widget( $action->create_gtk_image( $w->icon_size || 'large-toolbar' ) ) if ! $w->icon  && ! $w->image && defined $action->icon;
+	$gtkw->set_tooltip_text( $action->tooltip ) if ! defined $w->tooltip && defined $action->tooltip;
+	$gtkw->signal_connect( clicked => actioncb( $action, $w, \@args ) );
+    }
+};
 
 
 # Notice
-build 'Gapp::Notice', sub {
+build 'Gapp::Notebook', sub {
     my ( $l, $w ) = @_;
 
-    my $gtkw = $w->gtk_widget;
+    my $gtkw = $w->gobject;
     
+    # handle action widget
+    if ( $w->action_widget ) {
+	$w->action_widget->show_all if $w->action_widget;
+	$gtkw->set_action_widget( $w->action_widget->gobject, 'end' );
+    }
+
 };
 
 
-
-# NoticeBox
-style 'Gapp::NoticeBox', sub {
-    my ( $l, $w ) = @_;
+add 'Gapp::Widget', to 'Gapp::Notebook', sub {
+    my ( $l, $w, $c) = @_;
+   
+    my $gtkw = $w->gwrapper;
     
-    $w->properties->{decorated} ||= 0;
-    $w->properties->{opacity}   ||= 0;
-    $w->properties->{gravity}   ||= 'south-east';
-    $w->properties->{'skip-taskbar-hint'} = 1;
+    # check that widget is a NotebookPage
+    if ( ! $w->does('Gapp::Meta::Widget::Native::Trait::NotebookPage') ) {
+	die qq[ Could not add $w to $c, $w must have the NotebookPage trait applied.];
+    }
+    
+    
+    
+    # append the page
+    $c->gobject->append_page( $gtkw, $w->page_name );
+    
+    # create the label
+    $w->tab_label ?
+    $c->gobject->set_tab_label( $gtkw, $w->tab_label->gobject ) :
+    $c->gobject->set_tab_label_text( $gtkw, $w->page_name );
+    
+    $w->tab_label->show_all if $w->tab_label;
+
+    # call show all on the widget
+    $w->show_all;
+    
+    $c->{pages}{$w->page_name} = $w;
 };
 
-build 'Gapp::NoticeBox', sub {
-    my ( $l, $w ) = @_;
 
-    my $gtkw = $w->gtk_widget;
-    $gtkw->set_keep_above( 1 );
-};
+
+
+
 
 # SimpleList
-build 'Gapp::SimpleList', sub {
+build 'Gapp::Model::SimpleList', sub {
     my ( $l, $w ) = @_;
-    map { $w->gtk_widget->append( $_ ) } @{ $w->content };
+    map { $w->gobject->append( $_ ) } @{ $w->content };
 };
 
 
 # SpinButton
+
+style 'Gapp::SpinButton', sub {
+    my ( $l, $w ) = @_;
+    $w->properties->{activates_default} ||= 1;
+};
+
+
 build 'Gapp::SpinButton', sub {
     my ( $l, $w ) = @_;
-    $w->gtk_widget->set_increments( $w->step, $w->page ) if $w->page;
+    $w->gobject->set_increments( $w->step, $w->page ) if $w->page;
 };
 
 
@@ -357,77 +523,118 @@ build 'Gapp::SpinButton', sub {
 # ScrolledWindow
 build 'Gapp::ScrolledWindow', sub {
     my ( $l, $w ) = @_;
-    $w->gtk_widget->set_policy( @{ $w->policy }) if $w->policy;
+    $w->gobject->set_policy( @{ $w->policy }) if $w->policy;
 };
 
 add 'Gapp::Widget', to 'Gapp::ScrolledWindow', sub {
     my ($l, $w, $c) = @_;
     
     if ( $c->use_viewport ) {
-	$c->gtk_widget->add_with_viewport( $w->gtk_widget );
+	$c->gobject->add_with_viewport( $w->gwrapper );
     }
     else {
-	$c->gtk_widget->add( $w->gtk_widget );
+	$c->gobject->add( $w->gwrapper );
     }
     
 };
 
 
+# TextBuffer
+build 'Gapp::TextView', sub {
+    my ( $l, $w ) = @_;
+    $w->gobject->set_buffer( $w->buffer->gobject ) if $w->buffer;
+};
+
+
+
+# TextView
+build 'Gapp::TextView', sub {
+    my ( $l, $w ) = @_;
+    $w->gobject->set_buffer( $w->buffer->gobject ) if $w->buffer;
+};
+
+# ToggleButton
+build 'Gapp::ToggleButton', sub {
+    my ( $l, $w ) = @_;
+    my $gtkw = $w->gobject;
+    
+    my ( $image );
+    if ( $w->image ) {
+	$image = $w->image->gobject;
+    }
+    elsif ( $w->icon ) {
+	$image = Gtk2::Image->new_from_stock( $w->icon, $w->icon_size || 'button' );
+    }
+    
+
+    
+    $gtkw->set_label( $w->label ) if defined $w->label && ! defined $w->mnemonic;
+    $gtkw->set_image( $image ) if defined $image;
+    $gtkw->set_tooltip_text( $w->tooltip ) if defined $w->tooltip;
+};
+
 
 # Toolbar
 build 'Gapp::Toolbar', sub {
     my ( $l, $w ) = @_;
-    $w->gtk_widget->set_icon_size( $w->icon_size ) if $w->icon_size;
+    $w->gobject->set_icon_size( $w->icon_size ) if $w->icon_size;
 };
 
 # ToolItem
 
 add 'Gapp::ToolItem', to 'Gapp::Toolbar', sub {
     my ($l,  $w, $c) = @_;
-    $c->gtk_widget->insert( $w->gtk_widget, -1 );
+    $c->gobject->insert( $w->gwrapper, -1 );
 };
 
 
 # ToolButton
 
+style 'Gapp::ToolButton', sub {
+    my ( $l, $w ) = @_;
+    
+    my $image = $w->image ?
+    $w->image->gobject :
+    Gtk2::Image->new_from_stock( $w->icon || 'gtk-dialog-error' , $w->icon_size || 'large-toolbar' );
+    
+    $w->set_args( [ $image, defined $w->label ? $w->label : ''  ] );
+};
+
+
 build 'Gapp::ToolButton', sub {
     my ( $l, $w ) = @_;
-    my $gtkw = $w->gtk_widget;
-    
+    my $gtkw = $w->gobject;
+   
     $gtkw->set_stock_id( $w->stock_id ) if $w->stock_id;
     $gtkw->set_label( $w->label ) if defined $w->label;
     $gtkw->set_tooltip_text( $w->tooltip ) if defined $w->tooltip;
+};
+
+paint 'Gapp::ToolButton', sub {
+    my ( $l, $w ) = @_;
+    return if ! $w->action;
     
+    my ( $action, @args ) = parse_action ( $w->action );
     
-    if ( $w->action ) {
-	my $action = is_ArrayRef( $w->action ) ? $w->action->[0] : $w->action;
-	my ( $cb, @args );
-	@args = is_ArrayRef( $w->action ) ? @{$w->action} : ();
-	shift @args;
-	
-	if ( is_CodeRef($action) ) {
-	    $cb = $action;
-	    $gtkw->signal_connect( 'clicked', $cb, @args );
-	}
-	else {
-	    $gtkw->set_stock_id( $action->icon ) if $action->icon;
-	    $gtkw->set_label( $action->label ) if $action->label;
-	    $gtkw->set_tooltip_text( $action->tooltip ) if defined $action->tooltip;
-	    
-	    $gtkw->signal_connect( clicked => sub {
-		my ( $gtkw, @gtkargs ) = @_;
-		$action->perform( $w, \@args, $gtkw, \@gtkargs );
-	    });
-	}
+    if ( is_CodeRef $action ) {
+	$w->signal_connect( 'clicked', $action, \@args );
+    }
+    else {
+	my $gtkw = $w->gobject;
+	$gtkw->set_label( $action->label ) if ! defined $w->label && defined $action->label;
+	$gtkw->set_icon_widget( $action->create_gtk_image( $w->icon_size || 'large-toolbar' ) ) if ! $w->icon  && ! $w->image && defined $action->icon;
+	$gtkw->set_tooltip_text( $action->tooltip ) if ! defined $w->tooltip && defined $action->tooltip;
+	$gtkw->signal_connect( clicked => actioncb( $action, $w, \@args ) );
     }
 };
+
 
 # TreeView
 
 build 'Gapp::TreeView', sub {
     my ( $l, $w ) = @_;
-    my $gtkw = $w->gtk_widget;
-    $gtkw->set_model( $w->model->isa('Gapp::Widget') ? $w->model->gtk_widget : $w->model ) if $w->model;
+    my $gtkw = $w->gobject;
+    $gtkw->set_model( $w->model->isa('Gapp::Object') ? $w->model->gobject : $w->model ) if $w->model;
 };
 
 # TreeViewColumn
@@ -435,73 +642,80 @@ build 'Gapp::TreeView', sub {
 build 'Gapp::TreeViewColumn', sub {
     my ( $l, $w ) = @_;
     
-    my $gtkw = $w->gtk_widget;
+    my $gtkw = $w->gobject;
     
-    my $gtkr = $w->renderer->gtk_widget;
-    $gtkw->{renderer} = $gtkr;
-    
-    # add the renderer to the column
-    $gtkw->pack_start( $gtkr, $w->renderer->expand ? 1 : 0 );
-    
-    
-    # define how to display the renderer
-    if ( defined $w->data_column && ! $w->data_func ) {
-        $gtkw->add_attribute( $gtkr, $w->renderer->property => $w->data_column );
-    }
-    elsif ( $w->data_func ) {
-        $gtkw->set_cell_data_func($gtkr, sub {
-            my ( $col, $gtkrenderer, $model, $iter, @args ) = @_;
+    if ( $w->renderer ) {
+	
+	my $gtkr = $w->renderer->gobject;
+	$gtkw->{renderer} = $gtkr;
+	
+	# add the renderer to the column
+	$gtkw->pack_start( $gtkr, $w->renderer->expand ? 1 : 0 );
+	
+	# set the data function
+	$gtkw->set_cell_data_func($gtkr, sub {
+	    my ( $col, $gtkrenderer, $model, $iter, @args ) = @_;
 	    my $value = $w->get_cell_value( $model->get( $iter, $w->data_column ) );
-            $gtkrenderer->set_property( $w->renderer->property => $value );
-        });
+	    $gtkrenderer->set_property( $w->renderer->property => $value );
+	});
     }
     
     # if sorting enabled
     if ( $w->sort_enabled ) {
-	$w->gtk_widget->set_clickable( 1 );
-	$w->gtk_widget->signal_connect( 'clicked', sub {
-	    $w->gtk_widget->get_tree_view->get_model->set_default_sort_func( sub {
+	$w->gobject->set_clickable( 1 );
+	$w->gobject->signal_connect( 'clicked', sub {
+	    $w->gobject->get_tree_view->get_model->set_default_sort_func( sub {
 		my ( $model, $itera, $iterb, $w ) = @_;
 		my $a = $model->get( $itera, $w->data_column );
-		my $b = $model->get( $itera, $w->data_column );
+		my $b = $model->get( $iterb, $w->data_column );
 		$w->sort_func->( $w, $a, $b );
 	    }, $w)
 	} );
     }
-
 };
 
 # Widget
 
 add 'Gapp::Widget', to 'Gapp::AssistantPage', sub {
     my ($l,  $w, $c ) = @_;
-    $c->gtk_widget->pack_start( $w->gtk_widget, $w->expand, $w->fill, $w->padding );
+    $c->gobject->pack_start( $w->gwrapper, $w->expand, $w->fill, $w->padding );
 };
 
 add 'Gapp::Widget', to 'Gapp::Bin', sub {
     my ($l,  $w, $c ) = @_;
-    $c->gtk_widget->add( $w->gtk_widget );
+    $c->gobject->add( $w->gwrapper );
 };
 
 add 'Gapp::Widget', to 'Gapp::Container', sub {
     my ($l,  $w, $c) = @_;
-    $c->gtk_widget->pack_start( $w->gtk_widget, $w->expand, $w->fill, $w->padding );
+    $c->gobject->pack_start( $w->gwrapper, $w->expand, $w->fill, $w->padding );
 };
 
 add 'Gapp::Widget', to 'Gapp::HBox', sub {
     my ($l,  $w, $c ) = @_;
-    $c->gtk_widget->pack_start( $w->gtk_widget, $w->expand, $w->fill, $w->padding );
+    $c->gobject->pack_start( $w->gwrapper, $w->expand, $w->fill, $w->padding );
 };
 
 add 'Gapp::Widget', to 'Gapp::VBox', sub {
     my ($l,  $w, $c ) = @_;
-    $c->gtk_widget->pack_start( $w->gtk_widget, $w->expand, $w->fill, $w->padding );
+    $c->gobject->pack_start( $w->gwrapper, $w->expand, $w->fill, $w->padding );
+};
+
+add 'Gapp::Widget', to 'Gapp::Paned', sub {
+    my ($l,  $w, $c ) = @_;
+    
+    if ( ! $c->gobject->get_child1 ) {
+	$c->gobject->pack1( $w->gwrapper, $c->resize1, $c->shrink1 );
+    }
+    else {
+	$c->gobject->pack2( $w->gwrapper, $c->resize2, $c->shrink2 );
+    }
 };
 
 add 'Gapp::Widget', to 'Gapp::Dialog', sub {
     my ($l,  $w, $c ) = @_;
-    $c->gtk_widget->vbox->pack_start( $w->gtk_widget, $w->expand, $w->fill, $w->padding );
-    $w->gtk_widget->show;
+    $c->gobject->vbox->pack_start( $w->gwrapper, $w->expand, $w->fill, $w->padding );
+    $w->gobject->show;
 };
 
 add 'Gapp::Widget', to 'Gapp::Table', sub {
@@ -509,7 +723,7 @@ add 'Gapp::Widget', to 'Gapp::Table', sub {
     
     my $cell = $c->next_cell;
     
-    my $gtk_widget;
+    my $gtkw;
     if ( defined $cell->xalign || defined $cell->yalign ) {
         my ( $xa, $ya ) = ( $cell->xalign, $cell->yalign );
         my $xs = $xa == -1 ? 1 : 0; # x-scale
@@ -518,16 +732,16 @@ add 'Gapp::Widget', to 'Gapp::Table', sub {
         $ya = 0 if $ya == -1; # y-align
         
         my $gtk_align = Gtk2::Alignment->new( $xa, $ya, $xs, $ys );
-        $gtk_align->add( $w->gtk_widget );
-        $gtk_widget = $gtk_align;
+        $gtk_align->add( $w->gwrapper );
+        $gtkw = $gtk_align;
     }
     else {
-        $gtk_widget = $w->gtk_widget;
+        $gtkw = $w->gwrapper;
     }
     
     
-    $c->gtk_widget->attach(
-        $gtk_widget, $cell->table_attach, 
+    $c->gobject->attach(
+        $gtkw, $cell->table_attach, 
         0, 0
     );
     
@@ -535,19 +749,27 @@ add 'Gapp::Widget', to 'Gapp::Table', sub {
     1;
 };
 
+add 'Gapp::Widget', to 'Gapp::ToolItemGroup', sub {
+    my ($l,  $w, $c ) = @_;
+    $c->gobject->add( $w->gwrapper );
+};
+
+add 'Gapp::Widget', to 'Gapp::ToolPalette', sub {
+    my ($l,  $w, $c ) = @_;
+    $c->gobject->add( $w->gwrapper );
+};
+
 add 'Gapp::Widget', to 'Gapp::Window', sub {
     my ($l,  $w, $c ) = @_;
-    $c->gtk_widget->add( $w->gtk_widget );
+    $c->gobject->add( $w->gwrapper );
 };
 
 # Window
 
 build 'Gapp::Window', sub {
     my ( $l, $w ) = @_;
-    $w->gtk_widget->set_icon( $w->gtk_widget->render_icon( $w->icon, 'dnd' ) ) if $w->icon;
-    $w->gtk_widget->set_transient_for( $w->transient_for->gtk_widget ) if $w->transient_for;
-    $w->gtk_widget->set_modal( $w->modal ) if $w->modal;
-    $w->gtk_widget->set_position( $w->position ) if $w->position;
+    $w->gobject->set_icon( $w->gobject->render_icon( $w->icon, 'dnd' ) ) if $w->icon;
+    $w->gobject->set_transient_for( $w->transient_for->gobject ) if $w->transient_for;
 };
 
 

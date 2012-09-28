@@ -28,7 +28,6 @@ use Gapp::Moose::Meta::Attribute::Trait::GappDefault;
 use Gapp::Moose::Meta::Attribute::Trait::GappDialog;
 use Gapp::Moose::Meta::Attribute::Trait::GappMenu;
 use Gapp::Moose::Meta::Attribute::Trait::GappMenuBar;
-use Gapp::Moose::Meta::Attribute::Trait::GappNoticeBox;
 use Gapp::Moose::Meta::Attribute::Trait::GappScrolledWindow;
 use Gapp::Moose::Meta::Attribute::Trait::GappSpinButton;
 use Gapp::Moose::Meta::Attribute::Trait::GappStatusIcon;
@@ -88,32 +87,49 @@ Gapp::Moose::Role - Gapp widgets for your roles
   use Gapp::Moose::Role;
 
   widget 'label' => (
-    is => 'ro',
-    traits => [qw( GappLabel )],
-    construct => {
-        text => 'Hello World!'
-    }
-  )
 
-  widget 'window' => (
     is => 'ro',
-    traits => [qw( GappWindow GappDefault )],
+
+    traits => [qw( GappLabel )],
+
     construct => sub {
-        title => 'Gapp Application',
-        content => [ $_[0]->label ],
-        signal_connect => [
-            [ 'delete-event' => sub { Gtk2->main_quit } ]
-        ],
-    },
+
+        text => 'Hello World!'
+
+    }
+
   );
 
+  widget 'window' => (
 
+    is => 'ro',
 
- package main;
+    traits => [qw( GappWindow GappDefault )],
 
- Foo::Bar->new->show_all;
+    construct => sub {
 
- Gapp->main;
+        title => 'Gapp Application',
+    
+        content => [ $_[0]->label ],
+    
+        signal_connect => [
+
+            [ 'delete-event' => sub { Gtk2->main_quit } ]
+    
+        ],
+
+    },
+
+  );
+
+  ... and then later ...
+
+  package main;
+
+  Foo::Bar->new->show_all;
+
+  Gapp->main;
+ 
 =head1 DESCRIPTION
 
 L<Gapp::Moose::Role> provides sugar for adding L<Gapp> widgets to your L<Moose>

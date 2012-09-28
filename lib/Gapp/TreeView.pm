@@ -9,19 +9,32 @@ use Gapp::Types qw( GappTreeViewColumn );
 use Moose::Util;
 use MooseX::Types::Moose qw( ArrayRef HashRef );
 
-has '+class' => (
+has '+gclass' => (
     default => 'Gtk2::TreeView',
 );
 
 has 'model' => (
     is => 'rw',
     isa => 'Maybe[Object]',
+    trigger => sub {
+        my ( $self, $newval, $oldval ) = @_;
+        
+        if ( $self->has_gobject ) {
+            $self->gobject->set_model( $newval->gobject );
+        }
+    }
 );
 
 has 'columns' => (
     is => 'rw',
     isa => 'ArrayRef',
     default => sub { [ ] },
+);
+
+has 'data_column' => (
+    is => 'rw',
+    isa => 'Int',
+    default => 0,
 );
 
 sub BUILDARGS {
@@ -42,20 +55,19 @@ sub BUILDARGS {
     }
     
     # headers visible
-    if ( exists $args{headers_visible} ) {
-        $args{properties}{headers_visible} = $args{headers_visible};
-        delete $args{headers_visible};
+    for my $att ( qw(headers_visible headers_clickable) ) {
+        $args{properties}{$att} = delete $args{$att} if exists $args{$att};
     }
     
     __PACKAGE__->SUPER::BUILDARGS( %args );
 }
 
-after '_build_gtk_widget' => sub {
+after '_build_gobject' => sub {
     my $self = shift;
 
     for my $c ( @{ $self->columns } ) {
-        $self->gtk_widget->append_column( $c->gtk_widget );
-        $self->gtk_widget->{columns}{$c->name} = $c->gtk_widget;
+        $self->gobject->append_column( $c->gobject );
+        $self->gobject->{columns}{$c->name} = $c->gobject;
     }
 };
 
@@ -67,6 +79,15 @@ sub find_column {
             return $c;
         }
     }
+}
+
+sub get_selected {
+    my ( $self ) = @_;
+    
+    my $iter = $self->gobject->get_selection->get_selected;
+    return if ! $iter;
+    my $model = $self->gobject->get_model;
+    $model->get( $iter, $self->data_column );
 }
 
 1;
@@ -85,11 +106,13 @@ Gapp::TreeView - TreeView Widget
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
-=item +-- L<Gapp::Container>
+=item +-- L<Gapp::Widget>
 
-=item ....+-- L<Gapp::TreeView>
+=item ....+-- L<Gapp::Container>
+
+=item ........+-- L<Gapp::TreeView>
 
 =back
 
@@ -97,19 +120,73 @@ Gapp::TreeView - TreeView Widget
 
 =over 4
 
-=item B<model>
-
-=over 4
-
-=item isa L<Gapp::Model>|Undef
-
-=back
-
 =item B<columns>
 
 =over 4
 
-=item isa ArrayRef
+=item is rw
+
+=item isa ArrayRef[L<Gapp::TreeViewColumn>]
+
+=item default []
+
+=back
+
+The columns to add to the treeview.
+
+=item B<data_column>
+
+=over 4
+
+=item is rw
+
+=item isa Int
+
+=item default 0
+
+=back
+
+The default column in the model to retrieve data from. The contents of this
+column in the model will be returned when calling C<get_selected>.
+
+=item B<model>
+
+=over 4
+
+=item isa L<Gapp::Model>|GtkModel|Undef
+
+=back
+
+The model to use. May be a L<Gapp::Model> or Gtk2:: object.
+
+=back
+
+An array of L<Gapp::TreeViewColumn> objects to be displayed in the view.
+
+=back
+
+=head1 PROVIDED METHODS
+
+=over 4
+
+=item B<find_column $name>
+
+Searches for and returns a column with the specified name.
+
+=over 4
+
+=item returns L<Gapp::TreeViewColumn>|Undef
+
+=back
+
+=item B<get_selected>
+
+Returns a list of items selected in the view. For each of the rows selected,
+the contents from C<data_column> in the model will be returned.
+
+=over 4
+
+=item returns Array|Undef
 
 =back
 
@@ -121,7 +198,7 @@ Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
 
 =head1 COPYRIGHT & LICENSE
 
-    Copyright (c) 2011 Jeffrey Ray Hallock.
+    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
 
     This program is free software; you can redistribute it and/or
     modify it under the same terms as Perl itself.

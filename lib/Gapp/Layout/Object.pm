@@ -3,7 +3,6 @@ package Gapp::Layout::Object;
 use Moose;
 use MooseX::StrictConstructor;
 use MooseX::SemiAffordanceAccessor;
-use MooseX::Method::Signatures;
 
 use MooseX::Types::Moose qw( :all );
 
@@ -38,6 +37,19 @@ has '_stylers' => (
         add_styler => 'set',
         get_styler => 'get',
         has_styler => 'exists',
+    }
+);
+
+has '_painters' => (
+    is => 'ro',
+    isa => HashRef,
+    default => sub { { } },
+    init_arg => undef,
+    traits => [qw( Hash )],
+    handles => {
+        add_painter => 'set',
+        get_painter => 'get',
+        has_painter => 'exists',
     }
 );
 
@@ -91,11 +103,12 @@ sub find_packer {
     
     # widget superclasses ( minus Moose stuff )
     my @wisa = $widget->meta->linearized_isa;
-    splice @wisa,-2,2;
+    splice @wisa,-1,1;
+    
     
     # container superclasses ( minus Moose stuff, minus non-container classes )
     my @cisa = $container->meta->linearized_isa;
-    splice @cisa,-2,2;
+    splice @cisa,-1,1;
     @cisa = grep { $_->isa('Gapp::Container') } @cisa; 
     
     for my $cclass ( @cisa ) {
@@ -115,6 +128,15 @@ sub find_styler {
     $w = ($w->meta->superclasses)[0]->meta->name if $w->meta->name =~ /__ANON__/;
     return $self->get_styler( $w->meta->name ) if $self->get_styler( $w->meta->name );
     return $self->parent ? $self->parent->find_styler( $w ) : undef;
+}
+
+sub find_painter {
+    my ( $self, $w ) = @_;
+    $w = $w->meta->name if ref $w;
+    
+    $w = ($w->meta->superclasses)[0]->meta->name if $w->meta->name =~ /__ANON__/;
+    return $self->get_painter( $w->meta->name ) if $self->get_painter( $w->meta->name );
+    return $self->parent ? $self->parent->find_painter( $w ) : undef;
 }
 
 sub get_packer {
@@ -158,6 +180,14 @@ sub pack_widget {
     
     # pack the widget
     $packer->( $self, $widget, $container );   
+}
+
+sub paint_widget {
+    my ( $self, $widget ) = @_;
+    my $painter = $self->find_painter( $widget );
+    return if ! defined $painter;
+    
+    $painter->( $self, $widget );
 }
 
 sub style_widget {

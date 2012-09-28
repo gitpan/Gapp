@@ -1,5 +1,184 @@
 Changes for Gapp
 
+{{$NEXT}}
+
+0.47.2    2012-09-28 12:10:09
+- now using Dist::Zilla
+
+0.47.1 Sep 26 2012
+- updating pod
+
+0.47 Sep 25 2012
+- updated test suite
+
+
+0.46.4 Sep 7 2012
+- Changed when ListStore sets the args attribute during construction to support
+subclassing
+- Added trigger to model attribute of TreeStore to update the gtk_widget if it
+has been constructed
+
+0.46.3 Sep 6 2012
+- added border_width resize_mode property delegations to Container
+- added headers_visible headers_clickable property delegations to TreeView
+
+0.46 Sep 5 2012
+- calling "add" on an container whose gobject has already been created now packs the
+widget into the child
+- show_all called on widgets before being added to notebook to ensure that they are
+displayed
+- removed "form" attribute from FormElement role
+- added "form" method to FormElement role which returns the first widget in the
+ancestry with the Form trait applied
+- added trigger to "page_name" attribute of the NotebookPage trait which updates
+the label of the page in the notebook when changed
+- added HPaned, VPaned, Notebook attribute traits
+- added action_widget attribute to notebook
+- added image attribute to ImageButton
+- BUG FIX: Buttons with a CodeRef as an action were not passing user args correctly
+
+
+0.45.1 Aug 29 2012
+- fixed bug painting ImageMenuItem widgets
+
+0.45 Aug 29 2012
+- created tag-editor example
+- added mnemonic/accelerator attributes to Action objects
+- added support for default widget in window
+- added get_selected method to Gapp::TreeView
+- added data_column
+- added "name" attribute Gapp::Widget
+- added "find" method to Gapp::Container
+- add "toplvel" method to Gapp::Widget
+- BUGFIX: when subclassing a container widget, and overriding the 'default'
+property of the the content, parent values were not being set on the children
+- BUGFIX: when creating a Gapp::Widget without keeping a reference to it, the
+Gapp::Object would be garbage collected before the Gtk2::Widget was destroyed. Fixed
+by creating a circular reference between the Gapp object and the Gtk widget. When
+the Gtk object emits the "destroy" signal, the circular reference is broken, and
+all involved objects are garbage collected.
+
+
+
+0.44
+- factored out Notice/NoticeBox to GappX::NoticeBox
+- refactored Gapp::SimpleList to Gapp::Model::SimpleList
+- factored out dialog traits to GappX::Dialogs
+- factored out Gtk2 widgets to Gapp::Gtk2
+- fixed bug with painters applying action callback to widget twice
+- factoed out SSNEntry to GappX::SSNEntry
+
+
+0.44
+- factored out Notice/NoticeBox to GappX::NoticeBox
+- refactored Gapp::SimpleList to Gapp::Model::SimpleList
+- factored out dialog traits to GappX::Dialogs
+- factored out Gtk2 widgets to Gapp::Gtk2
+- fixed bug with painters applying action callback to widget twice
+- factoed out SSNEntry to GappX::SSNEntry
+
+
+0.43
+- add MenuToolButton, ToggleToolButton, RadioToolButton
+- add RagioMenuItem, CheckMenuItem, SeparatorMenuItem, TearoffMenuItem
+- Added AssistantPage trait
+- Removed AssistantPage widget
+- added GappXXXXX traits
+- removed Notice/Noticebox (see GappX::NoticeBox)
+- partial revamp of test suite
+
+
+
+0.42
+- renamed gtk_widget attribute to gobject in package Gapp::Object
+- added gwrapper attribute
+- updated documentation
+- FormField/FormElement are now roles instead of traits
+- factored out common widget attributes to roles
+- renamed "add_node" to "add" in package Gapp::Form::Context
+- removed OComboBox from Gapp::Gtk2 namespace
+- added "paint" keyword to Gapp::Layout
+- begin revamping of test suite
+
+0.41.1
+- documentation
+
+0.41
+- refactoring/documentation
+
+0.40
+- added Notebook widget
+- added NotebookPage trait
+- added TextTag, TextTable objects
+- updated documentation
+- fixed bug for assistant without buttons
+- added TextBuffer object
+
+
+0.39
+- added add_handles function to Gapp::Util
+
+0.38.1
+- added TextTagTable
+
+0.38
+- added TextBuffer, trait for TextBuffer
+
+0.37
+- added traits for ToolItemGroup, ToolPalette
+
+0.36
+- added HPaned, VPaned, ToolItemGroup, ToolPalette
+
+0.35
+- Work with Moose 2.0+
+
+0.34
+- Fixed SeparatorMenuItem bug
+
+0.33
+- Work with Moose 1.25
+- Update prerequisite requirements
+
+0.32
+- Removed dependancy on MooseX::Method::Signatures
+
+
+0.31.1
+BUG FIX:
+- Reverse changes made in 0.31 - change was not correct funcationality
+
+
+0.31
+BUG FIX:
+- do_Action callbacks were not passing arguments to the underlying callback correctly,
+added 'undef' value for gtk widget parameters
+
+0.30
+- Gapp::ComboBox doesn't throw errors when comparing undefined values
+- Added update, enable, disable methods to FormField trait
+- Added attribute/property delegation "type" to Window widget
+
+0.29
+BUG FIX:
+- Fixed bug where text property of ::Entry was being set to array instead of a string
+- Can assign code-refs to the action property of ::Button objects
+- ::Form::Stash no longer dies when it cannot find a field in the context
+- Fixed bug that threw errors when updating a form the had elements with no field
+attribute specified
+
+0.28
+- TreeViewColumn 'data_column' attribute now defaults to 0
+- TreeViewColumn now delegates properties 'min_width' and 'resizable' to the
+gtk_widget
+BUG FIX:
+- Layout builder for TreeViewColum was passing incorrect values to 'sort_func'
+
+0.27
+- added 'menu' attribute to Gapp::MenuItem
+BUG FIX:
+- fixed bug in DateEntry that called 'on_change' handler twice
+
 
 0.26
 - added ::StatusIcon

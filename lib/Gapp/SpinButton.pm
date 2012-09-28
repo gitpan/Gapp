@@ -5,7 +5,7 @@ use MooseX::SemiAffordanceAccessor;
 
 extends 'Gapp::Entry';
 
-has '+class' => (
+has '+gclass' => (
     default => 'Gtk2::SpinButton',
 );
 
@@ -34,30 +34,26 @@ sub BUILDARGS {
     my $class = shift;
     my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;
     
-    if ( exists $args{digits} ) {
-        $args{properties}{digits} = $args{digits};
-        delete $args{digits};
+    for my $att ( qw(digits climb_rate) ) {
+        $args{properties}{$att} = delete $args{$att} if exists $args{$att};
     }
-    if ( exists $args{climb_rate} ) {
-        $args{properties}{climb_rate} = $args{climb_rate};
-        delete $args{climb_rate};
-    }
+    
     __PACKAGE__->SUPER::BUILDARGS( %args );
 }
 
-before '_construct_gtk_widget' => sub {
+before '_construct_gobject' => sub {
     my ( $self ) = @_;
     $self->set_args( [ @{ $self->range }, $self->step ]);
 };
 
 # returns the value of the widget
 sub get_field_value {
-    $_[0]->gtk_widget->get_value;
+    $_[0]->gobject->get_value;
 }
 
 sub set_field_value {
     my ( $self, $value ) = @_;
-    $self->gtk_widget->set_value( defined $value ? $value : 0 );
+    $self->gobject->set_value( defined $value ? $value : 0 );
 }
 
 sub widget_to_stash {
@@ -73,7 +69,7 @@ sub stash_to_widget {
 sub _connect_changed_handler {
     my ( $self ) = @_;
 
-    $self->gtk_widget->signal_connect (
+    $self->gobject->signal_connect (
       changed => sub { $self->_widget_value_changed },
     );
 }
@@ -93,11 +89,63 @@ Gapp::SpinButton - RadioButton Widget
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
-=item +-- L<Gapp::Button>
+=item +-- L<Gapp::Widget>
 
-=item ....+-- L<Gapp::RadioButton>
+=item ....+-- L<Gapp::Entry>
+
+=item ........+-- L<Gapp::SpinButton>
+
+=back
+
+=head1 PROVIDED ATTRIBUTES
+
+=over 4
+
+=item B<range>
+
+=over 4
+
+=item is rw
+
+=item isa ArrayRef
+
+=item default [0,999]
+
+=back
+
+The minimum and maximum possible values.
+
+=over 4
+
+=item B<step>
+
+=over 4
+
+=item is rw
+
+=item isa Num
+
+=item default 1
+
+=back
+
+The amount the value will change when the user presses the up or down arrows.
+
+=over 4
+
+=item B<page>
+
+=over 4
+
+=item is rw
+
+=item isa Maybe[Num]
+
+=back
+
+The amount the value will change when the user presses the page-up or page-down keys.
 
 =back
 
@@ -107,7 +155,7 @@ Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
 
 =head1 COPYRIGHT & LICENSE
 
-    Copyright (c) 2011 Jeffrey Ray Hallock.
+    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
 
     This program is free software; you can redistribute it and/or
     modify it under the same terms as Perl itself.

@@ -1,6 +1,7 @@
 package Gapp::Meta::Widget::Native::Trait::FromUIManager;
 
 use Moose::Role;
+use MooseX::SemiAffordanceAccessor;
 use MooseX::LazyRequire;
 
 use Gapp::Types qw( GappUIManager );
@@ -18,9 +19,9 @@ has 'ui_widget' => (
     lazy_required => 1,
 );
 
-around '_construct_gtk_widget' => sub {
+around '_construct_gobject' => sub {
     my ( $orig, $self ) = @_;
-    my $w = $self->ui->gtk_widget->get_widget( $self->ui_widget );
+    my $w = $self->ui->gobject->get_widget( $self->ui_widget );
     
     if ( ! $w ) {
         $self->meta->throw_error(
@@ -31,7 +32,7 @@ around '_construct_gtk_widget' => sub {
         )
     }
     else {
-        $self->set_gtk_widget( $w );
+        $self->set_gobject( $w );
         return $w;
     }
     

@@ -2,13 +2,14 @@ package Gapp::MenuItem;
 
 use Moose;
 use MooseX::SemiAffordanceAccessor;
+
 extends 'Gapp::Bin';
+with 'Gapp::Meta::Widget::Native::Role::HasAction';
+with 'Gapp::Meta::Widget::Native::Role::HasLabel';
+with 'Gapp::Meta::Widget::Native::Role::HasMenu';
+with 'Gapp::Meta::Widget::Native::Role::HasMnemonic';
 
-
-use Gapp::Types qw(GappActionOrArrayRef);
-use MooseX::Types::Moose qw(Undef);
-
-has '+class' => (
+has '+gclass' => (
     default => 'Gtk2::MenuItem',
 );
 
@@ -20,15 +21,23 @@ has '+args' => (
     default => sub { [ '' ] },
 );
 
-has 'label' => (
+has 'visible_func' => (
     is => 'rw',
-    isa => 'Str',
+    isa => 'Maybe[CodeRef]',
 );
 
-has 'action' => (
-    is => 'rw',
-    isa => GappActionOrArrayRef|Undef,
-);
+
+sub BUILDARGS {
+    my $class = shift;
+    my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;
+    
+    for my $att ( qw(accel_path) ) {
+        $args{properties}{$att} = delete $args{$att} if exists $args{$att};
+    }
+    
+    __PACKAGE__->SUPER::BUILDARGS( %args );
+}
+
 
 
 1;
@@ -46,39 +55,27 @@ Gapp::MenuItem - MenuItem Widget
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
-=item L<Gapp::Container>
+=item +-- L<Gapp::Widget>
 
-=item ....+-- L<Gapp::Bin>
+=item ....+-- L<Gapp::Container>
 
-=item ........+-- L<Gapp::MenuItem>
+=item ........+-- L<Gapp::Bin>
 
-=back
-
-=head1 PROVIDED ATTRIBUTES
-
-=over 4
-
-=item B<action>
-
-=over 4
-
-=item isa GappActionOrArrayRef|Undef
+=item ............+-- L<Gapp::MenuItem>
 
 =back
 
-=back
+=head2 Roles
 
 =over 4
 
-=item B<label>
+=item L<Gapp::Meta::Widget::Native::Role::HasAction>
 
-=over 4
+=item L<Gapp::Meta::Widget::Native::Role::HasLabel>
 
-=item isa Str
-
-=back
+=item L<Gapp::Meta::Widget::Native::Role::HasMenu>
 
 =back
 
@@ -88,7 +85,7 @@ Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
 
 =head1 COPYRIGHT & LICENSE
 
-    Copyright (c) 2011 Jeffrey Ray Hallock.
+    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
 
     This program is free software; you can redistribute it and/or
     modify it under the same terms as Perl itself.

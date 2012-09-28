@@ -4,8 +4,16 @@ use Moose;
 use MooseX::SemiAffordanceAccessor;
 extends 'Gapp::MenuItem';
 
-has '+class' => (
+has '+gclass' => (
     default => 'Gtk2::SeparatorMenuItem',
+);
+
+has '+constructor' => (
+    default => 'new',
+);
+
+has '+args' => (
+    default => undef,
 );
 
 
@@ -25,11 +33,13 @@ Gapp::SeparatorMenuItem - SeparatorMenuItem Widget
 
 =over 4
 
-=item L<Gapp::Widget>
+=item L<Gapp::Object>
 
-=item +-- L<Gapp::MenuItem>
+=item +-- L<Gapp::Widget>
 
-=item ....+-- L<Gapp::SeparatorMenuItem>
+=item ....+-- L<Gapp::MenuItem>
+
+=item ........+-- L<Gapp::SeparatorMenuItem>
 
 =back
 
@@ -39,7 +49,7 @@ Jeffrey Ray Hallock E<lt>jeffrey.hallock at gmail dot comE<gt>
 
 =head1 COPYRIGHT & LICENSE
 
-    Copyright (c) 2011 Jeffrey Ray Hallock.
+    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
 
     This program is free software; you can redistribute it and/or
     modify it under the same terms as Perl itself.

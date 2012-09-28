@@ -74,17 +74,25 @@ Gapp::Actions - Create Actions for Gapp Applications
 =head1 SYNOPSIS
 
     package My::Actions;
+
     use Gapp::Actions -declare =>[qw( PrintStuff )];
 
     action PrintStuff => (
-        name => 'PrintStuff',
+
         label => 'Print',
+
         tooltip => 'Print',
+
         icon => 'gtk-print',
+
         code => sub {
-            my ( $action, $args ) = @_;
-            print $args[0], "\n";
+
+            my ( $action, $widget, $gobject, $args, $gtk_args ) = @_;
+
+            my ( $stuff ) = @$args;
+
         }
+
     );
 
     ... later ...
@@ -93,14 +101,14 @@ Gapp::Actions - Create Actions for Gapp Applications
 
     use My::Actions qw( PrintStuff );
 
-    # call directly
-    do_PrintStuff( 'Stuff!' );
-
     # assign to button
     Gapp::Button->new( action => [PrintStuff, 'stuff'] );
 
     # use as callback
     Gapp::Button->new->signal_connect( clicked => PrintStuff, 'stuff' );
+    
+    # call directly
+    do_PrintStuff( undef, undef, ['stuff'], undef );
   
 =head1 DESCRIPTION
 
@@ -138,7 +146,7 @@ autarch: Dave Rolsky <autarch@urth.org>
 
     Copyright (c) 2007-2009 Robert Sedlacek <rs@474.at>
 
-    Copyright (c) 2011 Jeffrey Ray Hallock.
+    Copyright (c) 2011-2012 Jeffrey Ray Hallock.
 
     This program is free software; you can redistribute it and/or
     modify it under the same terms as Perl itself.
