@@ -26,4 +26,4 @@ requires:
   Scalar::Util: 0
   Sub::Exporter: 0.90
   UDCode: 0
-version: 0.47.5
+version: 0.47.6

@@ -2,6 +2,7 @@ Changes for Gapp
 
 {{$NEXT}}
 - merged Gapp::Gtk2 widgets into Gapp
+- new versioning system
 
 0.47.3    2012-09-28 13:15:42
 - now using Dist::Zilla
