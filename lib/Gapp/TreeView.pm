@@ -1,4 +1,7 @@
 package Gapp::TreeView;
+{
+  $Gapp::TreeView::VERSION = '0.47.7';
+}
 
 use Moose;
 extends 'Gapp::Container';

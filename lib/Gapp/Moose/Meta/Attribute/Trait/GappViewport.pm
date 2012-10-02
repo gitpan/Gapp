@@ -1,4 +1,7 @@
 package Gapp::Moose::Meta::Attribute::Trait::GappViewport;
+{
+  $Gapp::Moose::Meta::Attribute::Trait::GappViewport::VERSION = '0.47.7';
+}
 use Moose::Role;
 
 before '_process_options' => sub {
@@ -7,5 +10,8 @@ before '_process_options' => sub {
 };
 
 package Moose::Meta::Attribute::Custom::Trait::GappViewport;
+{
+  $Moose::Meta::Attribute::Custom::Trait::GappViewport::VERSION = '0.47.7';
+}
 sub register_implementation { 'Gapp::Moose::Meta::Attribute::Trait::GappViewport' };
 1;

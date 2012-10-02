@@ -1,4 +1,7 @@
 package Gapp::Actions::Util;
+{
+  $Gapp::Actions::Util::VERSION = '0.47.7';
+}
 
 use Carp qw( carp );
 use List::MoreUtils qw( all any );

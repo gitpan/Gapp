@@ -1,4 +1,7 @@
 package Gapp::Form::Stash;
+{
+  $Gapp::Form::Stash::VERSION = '0.47.7';
+}
 
 use Moose;
 use MooseX::StrictConstructor;

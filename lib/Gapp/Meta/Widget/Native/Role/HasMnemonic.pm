@@ -1,4 +1,7 @@
 package Gapp::Meta::Widget::Native::Role::HasMnemonic;
+{
+  $Gapp::Meta::Widget::Native::Role::HasMnemonic::VERSION = '0.47.7';
+}
 
 use Moose::Role;
 use MooseX::SemiAffordanceAccessor;

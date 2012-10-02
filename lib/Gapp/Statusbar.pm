@@ -1,4 +1,7 @@
 package Gapp::Statusbar;
+{
+  $Gapp::Statusbar::VERSION = '0.47.7';
+}
 
 use Moose;
 extends 'Gapp::Box';

@@ -1,4 +1,7 @@
 package Gapp::Form::Context;
+{
+  $Gapp::Form::Context::VERSION = '0.47.7';
+}
 
 use Moose;
 use MooseX::StrictConstructor;

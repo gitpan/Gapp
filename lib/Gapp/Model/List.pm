@@ -1,4 +1,7 @@
 package Gapp::Model::List;
+{
+  $Gapp::Model::List::VERSION = '0.47.7';
+}
 
 use Moose;
 use MooseX::SemiAffordanceAccessor;

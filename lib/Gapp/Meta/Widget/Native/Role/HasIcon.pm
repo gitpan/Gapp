@@ -1,4 +1,7 @@
 package Gapp::Meta::Widget::Native::Role::HasIcon;
+{
+  $Gapp::Meta::Widget::Native::Role::HasIcon::VERSION = '0.47.7';
+}
 
 use Moose::Role;
 use MooseX::SemiAffordanceAccessor;

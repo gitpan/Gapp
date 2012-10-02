@@ -1,4 +1,7 @@
 package Gapp::EventBox;
+{
+  $Gapp::EventBox::VERSION = '0.47.7';
+}
 
 use Moose;
 use MooseX::SemiAffordanceAccessor;

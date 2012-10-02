@@ -1,4 +1,7 @@
 package Gapp::Image;
+{
+  $Gapp::Image::VERSION = '0.47.7';
+}
 
 use Moose;
 use MooseX::SemiAffordanceAccessor;

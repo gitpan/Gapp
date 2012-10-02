@@ -1,4 +1,7 @@
 package Gapp::Viewport;
+{
+  $Gapp::Viewport::VERSION = '0.47.7';
+}
 
 use Moose;
 use MooseX::SemiAffordanceAccessor;

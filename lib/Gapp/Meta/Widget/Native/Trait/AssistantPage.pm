@@ -1,4 +1,7 @@
 package Gapp::Meta::Widget::Native::Trait::AssistantPage;
+{
+  $Gapp::Meta::Widget::Native::Trait::AssistantPage::VERSION = '0.47.7';
+}
 
 use Moose::Role;
 use MooseX::SemiAffordanceAccessor;
@@ -62,6 +65,9 @@ sub validate {
 
 
 package Gapp::Meta::Widget::Custom::Trait::AssistantPage;
+{
+  $Gapp::Meta::Widget::Custom::Trait::AssistantPage::VERSION = '0.47.7';
+}
 sub register_implementation { 'Gapp::Meta::Widget::Native::Trait::AssistantPage' };
 
 

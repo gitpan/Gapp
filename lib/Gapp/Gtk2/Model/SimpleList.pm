@@ -1,4 +1,7 @@
 package Gapp::Gtk2::Model::SimpleList;
+{
+  $Gapp::Gtk2::Model::SimpleList::VERSION = '0.47.7';
+}
 
 use Glib qw(TRUE FALSE);
 use Gtk2;

@@ -1,4 +1,7 @@
 package Gapp::ToolButton;
+{
+  $Gapp::ToolButton::VERSION = '0.47.7';
+}
 
 use Moose;
 use MooseX::Types::Moose qw( ArrayRef );

@@ -1,4 +1,7 @@
 package Gapp::Moose::Meta::Attribute::Trait::GappLabel;
+{
+  $Gapp::Moose::Meta::Attribute::Trait::GappLabel::VERSION = '0.47.7';
+}
 use Moose::Role;
 
 before '_process_options' => sub {
@@ -7,5 +10,8 @@ before '_process_options' => sub {
 };
 
 package Moose::Meta::Attribute::Custom::Trait::GappLabel;
+{
+  $Moose::Meta::Attribute::Custom::Trait::GappLabel::VERSION = '0.47.7';
+}
 sub register_implementation { 'Gapp::Moose::Meta::Attribute::Trait::GappLabel' };
 1;

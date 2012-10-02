@@ -1,4 +1,7 @@
 package Gapp::CheckMenuItem;
+{
+  $Gapp::CheckMenuItem::VERSION = '0.47.7';
+}
 
 use Moose;
 use MooseX::StrictConstructor;

@@ -1,4 +1,7 @@
 package Gapp::Actions::Basic;
+{
+  $Gapp::Actions::Basic::VERSION = '0.47.7';
+}
 
 use Gapp::Actions -declare => [qw(
 HideWindow

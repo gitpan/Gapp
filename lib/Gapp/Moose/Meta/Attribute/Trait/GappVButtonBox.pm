@@ -1,4 +1,7 @@
 package Gapp::Moose::Meta::Attribute::Trait::GappVButtonBox;
+{
+  $Gapp::Moose::Meta::Attribute::Trait::GappVButtonBox::VERSION = '0.47.7';
+}
 use Moose::Role;
 
 before '_process_options' => sub {
@@ -7,5 +10,8 @@ before '_process_options' => sub {
 };
 
 package Moose::Meta::Attribute::Custom::Trait::GappVButtonBox;
+{
+  $Moose::Meta::Attribute::Custom::Trait::GappVButtonBox::VERSION = '0.47.7';
+}
 sub register_implementation { 'Gapp::Moose::Meta::Attribute::Trait::GappVButtonBox' };
 1;

@@ -1,4 +1,7 @@
 package Gapp::Meta::Widget::Native::Trait::FromUIManager;
+{
+  $Gapp::Meta::Widget::Native::Trait::FromUIManager::VERSION = '0.47.7';
+}
 
 use Moose::Role;
 use MooseX::SemiAffordanceAccessor;
@@ -40,6 +43,9 @@ around '_construct_gobject' => sub {
 
 
 package Gapp::Meta::Widget::Custom::Trait::FromUIManager;
+{
+  $Gapp::Meta::Widget::Custom::Trait::FromUIManager::VERSION = '0.47.7';
+}
 sub register_implementation { 'Gapp::Meta::Widget::Native::Trait::FromUIManager' };
 
 

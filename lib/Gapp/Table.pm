@@ -1,4 +1,7 @@
 package Gapp::Table;
+{
+  $Gapp::Table::VERSION = '0.47.7';
+}
 
 
 use Moose;

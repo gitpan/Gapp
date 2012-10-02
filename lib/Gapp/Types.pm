@@ -1,4 +1,7 @@
 package Gapp::Types;
+{
+  $Gapp::Types::VERSION = '0.47.7';
+}
 
 use MooseX::Types -declare => [qw(
 Form

@@ -1,4 +1,7 @@
 package Gapp::Action;
+{
+  $Gapp::Action::VERSION = '0.47.7';
+}
 
 use Moose;
 with 'MooseX::Clone';

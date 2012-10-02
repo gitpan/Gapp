@@ -1,4 +1,7 @@
 package Gapp::FileChooserDialog;
+{
+  $Gapp::FileChooserDialog::VERSION = '0.47.7';
+}
 
 use Moose;
 use MooseX::SemiAffordanceAccessor;

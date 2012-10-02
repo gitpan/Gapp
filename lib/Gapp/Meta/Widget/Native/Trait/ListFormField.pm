@@ -1,4 +1,7 @@
 package Gapp::Meta::Widget::Native::Trait::ListFormField;
+{
+  $Gapp::Meta::Widget::Native::Trait::ListFormField::VERSION = '0.47.7';
+}
 
 use Moose::Role;
 use MooseX::SemiAffordanceAccessor;
@@ -64,6 +67,9 @@ sub _connect_changed_handler {
 
 
 package Gapp::Meta::Widget::Custom::Trait::TreeViewListFormField;
+{
+  $Gapp::Meta::Widget::Custom::Trait::TreeViewListFormField::VERSION = '0.47.7';
+}
 sub register_implementation { 'Gapp::Meta::Widget::Native::Trait::TreeViewListFormField' };
 
 

@@ -1,4 +1,7 @@
 package Gapp::CellRenderer;
+{
+  $Gapp::CellRenderer::VERSION = '0.47.7';
+}
 
 use Moose;
 use MooseX::LazyRequire;

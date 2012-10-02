@@ -1,4 +1,7 @@
 package Gapp::Meta::Widget::Native::Role::HasAction;
+{
+  $Gapp::Meta::Widget::Native::Role::HasAction::VERSION = '0.47.7';
+}
 
 use Moose::Role;
 use MooseX::SemiAffordanceAccessor;

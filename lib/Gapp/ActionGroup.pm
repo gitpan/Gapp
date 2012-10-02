@@ -1,4 +1,7 @@
 package Gapp::ActionGroup;
+{
+  $Gapp::ActionGroup::VERSION = '0.47.7';
+}
 
 use Moose;
 use MooseX::SemiAffordanceAccessor;

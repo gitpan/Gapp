@@ -1,4 +1,7 @@
 package Gapp::TreeViewColumn;
+{
+  $Gapp::TreeViewColumn::VERSION = '0.47.7';
+}
 
 use Moose;
 extends 'Gapp::Object';

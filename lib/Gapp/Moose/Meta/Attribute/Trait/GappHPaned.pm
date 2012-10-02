@@ -1,4 +1,7 @@
 package Gapp::Moose::Meta::Attribute::Trait::GappHPaned;
+{
+  $Gapp::Moose::Meta::Attribute::Trait::GappHPaned::VERSION = '0.47.7';
+}
 use Moose::Role;
 
 before '_process_options' => sub {
@@ -7,5 +10,8 @@ before '_process_options' => sub {
 };
 
 package Moose::Meta::Attribute::Custom::Trait::GappHPaned;
+{
+  $Moose::Meta::Attribute::Custom::Trait::GappHPaned::VERSION = '0.47.7';
+}
 sub register_implementation { 'Gapp::Moose::Meta::Attribute::Trait::GappHPaned' };
 1;

@@ -1,4 +1,7 @@
 package Gapp;
+{
+  $Gapp::VERSION = '0.47.7';
+}
 
 use Gtk2 '-init';
 

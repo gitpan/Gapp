@@ -1,4 +1,7 @@
 package Gapp::Actions::Form;
+{
+  $Gapp::Actions::Form::VERSION = '0.47.7';
+}
 
 use Gapp::Actions -declare => [qw(
 Cancel

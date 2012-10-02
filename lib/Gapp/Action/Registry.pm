@@ -1,4 +1,7 @@
 package Gapp::Action::Registry;
+{
+  $Gapp::Action::Registry::VERSION = '0.47.7';
+}
 
 use Moose;
 use MooseX::SemiAffordanceAccessor;

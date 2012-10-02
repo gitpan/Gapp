@@ -1,4 +1,7 @@
 package Gapp::Dialog;
+{
+  $Gapp::Dialog::VERSION = '0.47.7';
+}
 
 use Moose;
 use MooseX::SemiAffordanceAccessor;

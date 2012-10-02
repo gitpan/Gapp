@@ -1,4 +1,7 @@
 package Gapp::Moose::Meta::Attribute::Trait::MenuItem;
+{
+  $Gapp::Moose::Meta::Attribute::Trait::MenuItem::VERSION = '0.47.7';
+}
 use Moose::Role;
 
 before '_process_options' => sub {
@@ -7,5 +10,8 @@ before '_process_options' => sub {
 };
 
 package Moose::Meta::Attribute::Custom::Trait::GappMenuItem;
+{
+  $Moose::Meta::Attribute::Custom::Trait::GappMenuItem::VERSION = '0.47.7';
+}
 sub register_implementation { 'Gapp::Moose::Meta::Attribute::Trait::GappMenuItem' };
 1;

@@ -1,4 +1,7 @@
 package Gapp::Actions::Base;
+{
+  $Gapp::Actions::Base::VERSION = '0.47.7';
+}
 use Moose;
 
 use Carp::Clan                      qw( ^Gapp::Actions );

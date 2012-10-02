@@ -1,4 +1,7 @@
 package Gapp::MenuItem;
+{
+  $Gapp::MenuItem::VERSION = '0.47.7';
+}
 
 use Moose;
 use MooseX::SemiAffordanceAccessor;

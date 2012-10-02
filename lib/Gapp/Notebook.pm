@@ -1,4 +1,7 @@
 package Gapp::Notebook;
+{
+  $Gapp::Notebook::VERSION = '0.47.7';
+}
 
 use Moose;
 use MooseX::SemiAffordanceAccessor;

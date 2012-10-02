@@ -1,4 +1,7 @@
 package Gapp::Layout::Default;
+{
+  $Gapp::Layout::Default::VERSION = '0.47.7';
+}
 use Gapp::Layout;
 use strict;
 use warnings;

@@ -1,4 +1,7 @@
 package Gapp::HPaned;
+{
+  $Gapp::HPaned::VERSION = '0.47.7';
+}
 
 use Moose;
 extends 'Gapp::Paned';

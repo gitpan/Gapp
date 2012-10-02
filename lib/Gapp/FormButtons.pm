@@ -1,4 +1,7 @@
 package Gapp::FormButtons;
+{
+  $Gapp::FormButtons::VERSION = '0.47.7';
+}
 
 use Moose;
 use MooseX::SemiAffordanceAccessor;

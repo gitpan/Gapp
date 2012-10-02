@@ -1,4 +1,7 @@
 package Gapp::TimeEntry;
+{
+  $Gapp::TimeEntry::VERSION = '0.47.7';
+}
 
 use Moose;
 use MooseX::SemiAffordanceAccessor;

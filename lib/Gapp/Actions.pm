@@ -1,4 +1,7 @@
 package Gapp::Actions;
+{
+  $Gapp::Actions::VERSION = '0.47.7';
+}
 use Moose;
 
 use Gapp::Actions::Base;

@@ -1,4 +1,7 @@
 package Gapp::Moose::Meta::Attribute::Trait::GappWidget;
+{
+  $Gapp::Moose::Meta::Attribute::Trait::GappWidget::VERSION = '0.47.7';
+}
 use Moose::Role;
 
 use MooseX::Types::Moose qw( ArrayRef CodeRef HashRef Int Str Undef );
@@ -54,6 +57,9 @@ before '_process_options' => sub {
 };
 
 package Moose::Meta::Attribute::Custom::Trait::GappWidget;
+{
+  $Moose::Meta::Attribute::Custom::Trait::GappWidget::VERSION = '0.47.7';
+}
 sub register_implementation { 'Gapp::Moose::Meta::Attribute::Trait::GappWidget' };
 
 1;

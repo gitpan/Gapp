@@ -1,4 +1,7 @@
 package Gapp::Meta::Attribute::Trait::GappDefault;
+{
+  $Gapp::Meta::Attribute::Trait::GappDefault::VERSION = '0.47.7';
+}
 use Moose::Role;
 
 use MooseX::Types::Moose qw( ArrayRef HashRef );
@@ -24,6 +27,9 @@ before '_process_options' => sub {
 
 
 package Moose::Meta::Attribute::Custom::Trait::GappDefault;
+{
+  $Moose::Meta::Attribute::Custom::Trait::GappDefault::VERSION = '0.47.7';
+}
 sub register_implementation { 'Gapp::Meta::Attribute::Trait::GappDefault' };
 
 1;
