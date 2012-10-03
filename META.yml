@@ -25,5 +25,4 @@ requires:
   MooseX::Types: 0
   Scalar::Util: 0
   Sub::Exporter: 0.90
-  UDCode: 0
-version: 0.47.7
+version: 0.480

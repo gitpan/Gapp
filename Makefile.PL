@@ -31,10 +31,9 @@ my %WriteMakefileArgs = (
     "MooseX::StrictConstructor" => 0,
     "MooseX::Types" => 0,
     "Scalar::Util" => 0,
-    "Sub::Exporter" => "0.90",
-    "UDCode" => 0
+    "Sub::Exporter" => "0.90"
   },
-  "VERSION" => "0.47.7",
+  "VERSION" => "0.480",
   "test" => {
     "TESTS" => "t/*.t"
   }

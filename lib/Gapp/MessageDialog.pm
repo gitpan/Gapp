@@ -1,11 +1,10 @@
-package Gapp::Dialog;
+package Gapp::MessageDialog;
 {
-  $Gapp::Dialog::VERSION = '0.47.7';
+  $Gapp::MessageDialog::VERSION = '0.480';
 }
 
 use Moose;
 use MooseX::SemiAffordanceAccessor;
-use MooseX::Types::Moose qw( ArrayRef );
 
 extends 'Gapp::Dialog';
 

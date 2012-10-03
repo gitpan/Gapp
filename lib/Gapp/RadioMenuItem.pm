@@ -1,6 +1,6 @@
 package Gapp::RadioMenuItem;
 {
-  $Gapp::RadioMenuItem::VERSION = '0.47.7';
+  $Gapp::RadioMenuItem::VERSION = '0.480';
 }
 
 use Moose;

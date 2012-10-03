@@ -1,6 +1,6 @@
 package Gapp::Gtk2::Model::SimpleList;
 {
-  $Gapp::Gtk2::Model::SimpleList::VERSION = '0.47.7';
+  $Gapp::Gtk2::Model::SimpleList::VERSION = '0.480';
 }
 
 use Glib qw(TRUE FALSE);

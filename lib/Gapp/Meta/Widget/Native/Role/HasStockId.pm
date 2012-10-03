@@ -1,6 +1,6 @@
 package Gapp::Meta::Widget::Native::Role::HasStockId;
 {
-  $Gapp::Meta::Widget::Native::Role::HasStockId::VERSION = '0.47.7';
+  $Gapp::Meta::Widget::Native::Role::HasStockId::VERSION = '0.480';
 }
 
 use Moose::Role;

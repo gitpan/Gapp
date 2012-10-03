@@ -1,6 +1,6 @@
 package Gapp::ProgressBar;
 {
-  $Gapp::ProgressBar::VERSION = '0.47.7';
+  $Gapp::ProgressBar::VERSION = '0.480';
 }
 
 use Moose;

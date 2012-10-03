@@ -1,6 +1,6 @@
 package Gapp::Moose::Meta::Attribute::Trait::GappDialog;
 {
-  $Gapp::Moose::Meta::Attribute::Trait::GappDialog::VERSION = '0.47.7';
+  $Gapp::Moose::Meta::Attribute::Trait::GappDialog::VERSION = '0.480';
 }
 use Moose::Role;
 
@@ -11,7 +11,7 @@ before '_process_options' => sub {
 
 package Moose::Meta::Attribute::Custom::Trait::GappDialog;
 {
-  $Moose::Meta::Attribute::Custom::Trait::GappDialog::VERSION = '0.47.7';
+  $Moose::Meta::Attribute::Custom::Trait::GappDialog::VERSION = '0.480';
 }
 sub register_implementation { 'Gapp::Moose::Meta::Attribute::Trait::GappDialog' };
 1;

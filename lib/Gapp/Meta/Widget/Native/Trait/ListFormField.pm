@@ -1,6 +1,6 @@
 package Gapp::Meta::Widget::Native::Trait::ListFormField;
 {
-  $Gapp::Meta::Widget::Native::Trait::ListFormField::VERSION = '0.47.7';
+  $Gapp::Meta::Widget::Native::Trait::ListFormField::VERSION = '0.480';
 }
 
 use Moose::Role;
@@ -68,7 +68,7 @@ sub _connect_changed_handler {
 
 package Gapp::Meta::Widget::Custom::Trait::TreeViewListFormField;
 {
-  $Gapp::Meta::Widget::Custom::Trait::TreeViewListFormField::VERSION = '0.47.7';
+  $Gapp::Meta::Widget::Custom::Trait::TreeViewListFormField::VERSION = '0.480';
 }
 sub register_implementation { 'Gapp::Meta::Widget::Native::Trait::TreeViewListFormField' };
 

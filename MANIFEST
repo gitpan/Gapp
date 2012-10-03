@@ -24,6 +24,7 @@ lib/Gapp/Actions/Basic.pm
 lib/Gapp/Actions/Form.pm
 lib/Gapp/Actions/Util.pm
 lib/Gapp/Assistant.pm
+lib/Gapp/AssistantPage.pm
 lib/Gapp/Bin.pm
 lib/Gapp/Box.pm
 lib/Gapp/Button.pm

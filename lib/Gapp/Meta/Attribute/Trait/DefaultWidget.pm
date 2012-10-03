@@ -1,6 +1,6 @@
 package Gapp::Meta::Attribute::Trait::DefaultWidget;
 {
-  $Gapp::Meta::Attribute::Trait::DefaultWidget::VERSION = '0.47.7';
+  $Gapp::Meta::Attribute::Trait::DefaultWidget::VERSION = '0.480';
 }
 use Moose::Role;
 
@@ -22,7 +22,7 @@ before '_process_options' => sub {
 
 package Moose::Meta::Attribute::Custom::Trait::DefaultWidget;
 {
-  $Moose::Meta::Attribute::Custom::Trait::DefaultWidget::VERSION = '0.47.7';
+  $Moose::Meta::Attribute::Custom::Trait::DefaultWidget::VERSION = '0.480';
 }
 sub register_implementation { 'Gapp::Meta::Attribute::Trait::DefaultWidget' };
 

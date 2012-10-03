@@ -1,6 +1,6 @@
 package Gapp::Statusbar;
 {
-  $Gapp::Statusbar::VERSION = '0.47.7';
+  $Gapp::Statusbar::VERSION = '0.480';
 }
 
 use Moose;

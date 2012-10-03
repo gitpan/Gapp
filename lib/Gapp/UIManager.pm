@@ -1,6 +1,6 @@
 package Gapp::UIManager;
 {
-  $Gapp::UIManager::VERSION = '0.47.7';
+  $Gapp::UIManager::VERSION = '0.480';
 }
 
 use Moose;

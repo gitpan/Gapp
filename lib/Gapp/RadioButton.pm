@@ -1,6 +1,6 @@
 package Gapp::RadioButton;
 {
-  $Gapp::RadioButton::VERSION = '0.47.7';
+  $Gapp::RadioButton::VERSION = '0.480';
 }
 
 use Moose;
