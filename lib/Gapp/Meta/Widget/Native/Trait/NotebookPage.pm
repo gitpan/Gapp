@@ -1,6 +1,6 @@
 package Gapp::Meta::Widget::Native::Trait::NotebookPage;
 {
-  $Gapp::Meta::Widget::Native::Trait::NotebookPage::VERSION = '0.480';
+  $Gapp::Meta::Widget::Native::Trait::NotebookPage::VERSION = '0.481';
 }
 
 use Moose::Role;
@@ -76,7 +76,7 @@ has 'page_name' => (
 
 package Gapp::Meta::Widget::Custom::Trait::NotebookPage;
 {
-  $Gapp::Meta::Widget::Custom::Trait::NotebookPage::VERSION = '0.480';
+  $Gapp::Meta::Widget::Custom::Trait::NotebookPage::VERSION = '0.481';
 }
 sub register_implementation { 'Gapp::Meta::Widget::Native::Trait::NotebookPage' };
 

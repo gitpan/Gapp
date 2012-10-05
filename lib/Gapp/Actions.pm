@@ -1,6 +1,6 @@
 package Gapp::Actions;
 {
-  $Gapp::Actions::VERSION = '0.480';
+  $Gapp::Actions::VERSION = '0.481';
 }
 use Moose;
 

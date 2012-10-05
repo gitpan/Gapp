@@ -1,6 +1,6 @@
 package Gapp::TextBuffer;
 {
-  $Gapp::TextBuffer::VERSION = '0.480';
+  $Gapp::TextBuffer::VERSION = '0.481';
 }
 
 use Moose;

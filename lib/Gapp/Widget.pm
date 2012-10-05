@@ -1,6 +1,6 @@
 package Gapp::Widget;
 {
-  $Gapp::Widget::VERSION = '0.480';
+  $Gapp::Widget::VERSION = '0.481';
 }
 
 use Moose;

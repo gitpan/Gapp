@@ -1,6 +1,6 @@
 package Gapp::Moose::Meta::Attribute::Trait::GappComboBox;
 {
-  $Gapp::Moose::Meta::Attribute::Trait::GappComboBox::VERSION = '0.480';
+  $Gapp::Moose::Meta::Attribute::Trait::GappComboBox::VERSION = '0.481';
 }
 use Moose::Role;
 
@@ -11,7 +11,7 @@ before '_process_options' => sub {
 
 package Moose::Meta::Attribute::Custom::Trait::GappComboBox;
 {
-  $Moose::Meta::Attribute::Custom::Trait::GappComboBox::VERSION = '0.480';
+  $Moose::Meta::Attribute::Custom::Trait::GappComboBox::VERSION = '0.481';
 }
 sub register_implementation { 'Gapp::Moose::Meta::Attribute::Trait::GappComboBox' };
 1;

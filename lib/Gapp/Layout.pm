@@ -1,6 +1,6 @@
 package Gapp::Layout;
 {
-  $Gapp::Layout::VERSION = '0.480';
+  $Gapp::Layout::VERSION = '0.481';
 }
 use strict;
 use warnings;

@@ -1,6 +1,6 @@
 package Gapp::SeparatorMenuItem;
 {
-  $Gapp::SeparatorMenuItem::VERSION = '0.480';
+  $Gapp::SeparatorMenuItem::VERSION = '0.481';
 }
 
 use Moose;

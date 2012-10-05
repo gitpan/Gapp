@@ -1,6 +1,6 @@
 package Gapp::Assistant;
 {
-  $Gapp::Assistant::VERSION = '0.480';
+  $Gapp::Assistant::VERSION = '0.481';
 }
 
 use Moose;
@@ -24,9 +24,12 @@ has 'forward_page_func' => (
 
 sub current_page {
     my ( $self ) = @_;
+    
+    my @pages = $self->children;
+    
     my $num = $self->gobject->get_current_page;
     
-    for my $page ( $self->children ) {
+    for my $page ( @pages ) {
         return $page if $page->page_num == $num;
     }
 }

@@ -1,6 +1,6 @@
 package Gapp::Bin;
 {
-  $Gapp::Bin::VERSION = '0.480';
+  $Gapp::Bin::VERSION = '0.481';
 }
 
 use Moose;

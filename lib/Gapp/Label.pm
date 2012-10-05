@@ -1,6 +1,6 @@
 package Gapp::Label;
 {
-  $Gapp::Label::VERSION = '0.480';
+  $Gapp::Label::VERSION = '0.481';
 }
 
 use Moose;

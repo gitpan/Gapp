@@ -1,6 +1,6 @@
 package Gapp::Layout::Default;
 {
-  $Gapp::Layout::Default::VERSION = '0.480';
+  $Gapp::Layout::Default::VERSION = '0.481';
 }
 use Gapp::Layout;
 use strict;
@@ -214,6 +214,24 @@ style 'Gapp::Entry', sub {
     my ( $l, $w ) = @_;
     $w->properties->{activates_default} ||= 1;
 };
+
+
+
+
+
+
+# EventBox
+style 'Gapp::EventBox', sub {
+    my ( $l, $w ) = @_;
+};
+
+build 'Gapp::EventBox', sub {
+    my ( $l, $w ) = @_;
+};
+
+
+
+
 
 # FileChooserDialog
 

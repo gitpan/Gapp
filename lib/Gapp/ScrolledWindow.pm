@@ -1,6 +1,6 @@
 package Gapp::ScrolledWindow;
 {
-  $Gapp::ScrolledWindow::VERSION = '0.480';
+  $Gapp::ScrolledWindow::VERSION = '0.481';
 }
 
 use Moose;

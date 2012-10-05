@@ -1,6 +1,6 @@
 package Gapp::Window;
 {
-  $Gapp::Window::VERSION = '0.480';
+  $Gapp::Window::VERSION = '0.481';
 }
 
 use Moose;

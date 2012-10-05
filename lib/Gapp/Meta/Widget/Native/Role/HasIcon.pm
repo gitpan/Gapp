@@ -1,6 +1,6 @@
 package Gapp::Meta::Widget::Native::Role::HasIcon;
 {
-  $Gapp::Meta::Widget::Native::Role::HasIcon::VERSION = '0.480';
+  $Gapp::Meta::Widget::Native::Role::HasIcon::VERSION = '0.481';
 }
 
 use Moose::Role;

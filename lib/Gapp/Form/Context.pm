@@ -1,6 +1,6 @@
 package Gapp::Form::Context;
 {
-  $Gapp::Form::Context::VERSION = '0.480';
+  $Gapp::Form::Context::VERSION = '0.481';
 }
 
 use Moose;
@@ -97,6 +97,7 @@ sub modify {
 sub update {
     my ( $self, $stash ) = @_;
     
+    
     for my $path ( $stash->elements ) {
         next if $path eq '';
         
@@ -110,7 +111,9 @@ sub update {
 
 sub update_from_stash {
     my $self = shift;
-    warn '$cx->update_from_stash( $stash ) deprecated, use $cx->update( $stash )';
+    use Carp qw( cluck );
+    
+    cluck '$cx->update_from_stash( $stash ) deprecated, use $cx->update( $stash )';
     $self->update( @_ );
 }
 

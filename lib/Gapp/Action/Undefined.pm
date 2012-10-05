@@ -1,6 +1,6 @@
 package Gapp::Action::Undefined;
 {
-  $Gapp::Action::Undefined::VERSION = '0.480';
+  $Gapp::Action::Undefined::VERSION = '0.481';
 }
 
 use Moose;

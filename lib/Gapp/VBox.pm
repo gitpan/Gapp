@@ -1,6 +1,6 @@
 package Gapp::VBox;
 {
-  $Gapp::VBox::VERSION = '0.480';
+  $Gapp::VBox::VERSION = '0.481';
 }
 
 use Moose;

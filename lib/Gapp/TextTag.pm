@@ -1,6 +1,6 @@
 package Gapp::TextTag;
 {
-  $Gapp::TextTag::VERSION = '0.480';
+  $Gapp::TextTag::VERSION = '0.481';
 }
 
 use Moose;
