@@ -1,6 +1,6 @@
 package Gapp::SeparatorToolItem;
 {
-  $Gapp::SeparatorToolItem::VERSION = '0.483';
+  $Gapp::SeparatorToolItem::VERSION = '0.484';
 }
 
 use Moose;

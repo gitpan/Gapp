@@ -1,6 +1,9 @@
 Changes for Gapp
 
 {{$NEXT}}
+- removed debug print statements
+
+0.483     2012-10-08 12:18:51
 - BUG FIX: Failing install on clean system, using artifacts
 
 0.482     2012-10-08 00:26:59

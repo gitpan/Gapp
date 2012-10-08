@@ -1,9 +1,9 @@
 package Gapp::Gtk2::Model::List;
 {
-  $Gapp::Gtk2::Model::List::VERSION = '0.483';
+  $Gapp::Gtk2::Model::List::VERSION = '0.484';
 }
 {
-  $Gapp::Gtk2::Model::List::VERSION = '0.483';
+  $Gapp::Gtk2::Model::List::VERSION = '0.484';
 }
 
 use Glib qw(TRUE FALSE);

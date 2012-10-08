@@ -1,6 +1,6 @@
 package Gapp::Moose::Meta::Attribute::Trait::GappSpinButton;
 {
-  $Gapp::Moose::Meta::Attribute::Trait::GappSpinButton::VERSION = '0.483';
+  $Gapp::Moose::Meta::Attribute::Trait::GappSpinButton::VERSION = '0.484';
 }
 use Moose::Role;
 
@@ -11,7 +11,7 @@ before '_process_options' => sub {
 
 package Moose::Meta::Attribute::Custom::Trait::GappSpinButton;
 {
-  $Moose::Meta::Attribute::Custom::Trait::GappSpinButton::VERSION = '0.483';
+  $Moose::Meta::Attribute::Custom::Trait::GappSpinButton::VERSION = '0.484';
 }
 sub register_implementation { 'Gapp::Moose::Meta::Attribute::Trait::GappSpinButton' };
 1;

@@ -1,6 +1,6 @@
 package Gapp::ToggleToolButton;
 {
-  $Gapp::ToggleToolButton::VERSION = '0.483';
+  $Gapp::ToggleToolButton::VERSION = '0.484';
 }
 
 use Moose;

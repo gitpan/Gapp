@@ -1,6 +1,6 @@
 package Gapp::MenuBar;
 {
-  $Gapp::MenuBar::VERSION = '0.483';
+  $Gapp::MenuBar::VERSION = '0.484';
 }
 
 use Moose;

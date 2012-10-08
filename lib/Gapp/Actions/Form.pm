@@ -1,6 +1,6 @@
 package Gapp::Actions::Form;
 {
-  $Gapp::Actions::Form::VERSION = '0.483';
+  $Gapp::Actions::Form::VERSION = '0.484';
 }
 
 use Gapp::Actions -declare => [qw(
@@ -18,8 +18,6 @@ action Apply => (
     icon => 'gtk-apply',
     code => sub {
         my ( $action, $widget, $userargs, $gtkw, $gtkargs ) = @_;
-        
-        print @_, "\n";
         
         my $form = $widget->form;
         

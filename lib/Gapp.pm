@@ -1,6 +1,6 @@
 package Gapp;
 {
-  $Gapp::VERSION = '0.483';
+  $Gapp::VERSION = '0.484';
 }
 
 use Gtk2 '-init';

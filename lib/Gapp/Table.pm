@@ -1,6 +1,6 @@
 package Gapp::Table;
 {
-  $Gapp::Table::VERSION = '0.483';
+  $Gapp::Table::VERSION = '0.484';
 }
 
 

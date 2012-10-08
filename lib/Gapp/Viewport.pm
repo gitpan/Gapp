@@ -1,6 +1,6 @@
 package Gapp::Viewport;
 {
-  $Gapp::Viewport::VERSION = '0.483';
+  $Gapp::Viewport::VERSION = '0.484';
 }
 
 use Moose;

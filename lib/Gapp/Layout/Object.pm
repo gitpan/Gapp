@@ -1,6 +1,6 @@
 package Gapp::Layout::Object;
 {
-  $Gapp::Layout::Object::VERSION = '0.483';
+  $Gapp::Layout::Object::VERSION = '0.484';
 }
 
 use Moose;
@@ -95,8 +95,6 @@ sub find_builder {
     # widget superclasses ( minus Moose stuff )
     my @wisa = $w->meta->linearized_isa;
     splice @wisa,-1,1;
-    
-    print $w, "-", @wisa, "\n";
     
     for my $wclass ( @wisa ) {
         my $builder = $self->lookup_builder( $wclass );

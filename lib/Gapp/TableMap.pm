@@ -1,6 +1,6 @@
 package Gapp::TableMap;
 {
-  $Gapp::TableMap::VERSION = '0.483';
+  $Gapp::TableMap::VERSION = '0.484';
 }
 
 use Moose;

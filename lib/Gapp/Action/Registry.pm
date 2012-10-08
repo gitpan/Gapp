@@ -1,6 +1,6 @@
 package Gapp::Action::Registry;
 {
-  $Gapp::Action::Registry::VERSION = '0.483';
+  $Gapp::Action::Registry::VERSION = '0.484';
 }
 
 use Moose;

@@ -1,6 +1,6 @@
 package Gapp::AssistantPage;
 {
-  $Gapp::AssistantPage::VERSION = '0.483';
+  $Gapp::AssistantPage::VERSION = '0.484';
 }
 
 use Moose;
