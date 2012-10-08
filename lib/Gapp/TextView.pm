@@ -1,6 +1,6 @@
 package Gapp::TextView;
 {
-  $Gapp::TextView::VERSION = '0.481';
+  $Gapp::TextView::VERSION = '0.482';
 }
 
 use Moose;

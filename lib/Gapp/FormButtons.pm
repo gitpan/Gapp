@@ -1,6 +1,6 @@
 package Gapp::FormButtons;
 {
-  $Gapp::FormButtons::VERSION = '0.481';
+  $Gapp::FormButtons::VERSION = '0.482';
 }
 
 use Moose;

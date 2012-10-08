@@ -1,6 +1,6 @@
 package Gapp::EventBox;
 {
-  $Gapp::EventBox::VERSION = '0.481';
+  $Gapp::EventBox::VERSION = '0.482';
 }
 
 use Moose;

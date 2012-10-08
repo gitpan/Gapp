@@ -1,6 +1,6 @@
 package Gapp::TreeViewColumn;
 {
-  $Gapp::TreeViewColumn::VERSION = '0.481';
+  $Gapp::TreeViewColumn::VERSION = '0.482';
 }
 
 use Moose;

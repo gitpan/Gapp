@@ -1,6 +1,6 @@
 package Gapp::SpinButton;
 {
-  $Gapp::SpinButton::VERSION = '0.481';
+  $Gapp::SpinButton::VERSION = '0.482';
 }
 
 use Moose;

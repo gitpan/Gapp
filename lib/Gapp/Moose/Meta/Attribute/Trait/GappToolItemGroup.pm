@@ -1,6 +1,6 @@
 package Gapp::Moose::Meta::Attribute::Trait::GappToolItemGroup;
 {
-  $Gapp::Moose::Meta::Attribute::Trait::GappToolItemGroup::VERSION = '0.481';
+  $Gapp::Moose::Meta::Attribute::Trait::GappToolItemGroup::VERSION = '0.482';
 }
 use Moose::Role;
 
@@ -11,7 +11,7 @@ before '_process_options' => sub {
 
 package Moose::Meta::Attribute::Custom::Trait::GappToolItemGroup;
 {
-  $Moose::Meta::Attribute::Custom::Trait::GappToolItemGroup::VERSION = '0.481';
+  $Moose::Meta::Attribute::Custom::Trait::GappToolItemGroup::VERSION = '0.482';
 }
 sub register_implementation { 'Gapp::Moose::Meta::Attribute::Trait::GappToolItemGroup' };
 1;

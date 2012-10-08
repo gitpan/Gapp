@@ -1,6 +1,6 @@
 package Gapp::Image;
 {
-  $Gapp::Image::VERSION = '0.481';
+  $Gapp::Image::VERSION = '0.482';
 }
 
 use Moose;

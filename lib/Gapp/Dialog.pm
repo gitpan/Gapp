@@ -1,6 +1,6 @@
 package Gapp::Dialog;
 {
-  $Gapp::Dialog::VERSION = '0.481';
+  $Gapp::Dialog::VERSION = '0.482';
 }
 
 use Moose;

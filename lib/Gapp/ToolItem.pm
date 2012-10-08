@@ -1,6 +1,6 @@
 package Gapp::ToolItem;
 {
-  $Gapp::ToolItem::VERSION = '0.481';
+  $Gapp::ToolItem::VERSION = '0.482';
 }
 
 use Moose;

@@ -1,6 +1,6 @@
 package Gapp::Meta::Widget::Native::Role::FormField;
 {
-  $Gapp::Meta::Widget::Native::Role::FormField::VERSION = '0.481';
+  $Gapp::Meta::Widget::Native::Role::FormField::VERSION = '0.482';
 }
 
 use Moose::Role;
@@ -82,7 +82,7 @@ sub disable {
 
 package Gapp::Meta::Widget::Custom::Trait::FormField;
 {
-  $Gapp::Meta::Widget::Custom::Trait::FormField::VERSION = '0.481';
+  $Gapp::Meta::Widget::Custom::Trait::FormField::VERSION = '0.482';
 }
 sub register_implementation { 'Gapp::Meta::Widget::Native::Role::FormField' };
 

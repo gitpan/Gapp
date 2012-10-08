@@ -1,6 +1,6 @@
 package Gapp::VButtonBox;
 {
-  $Gapp::VButtonBox::VERSION = '0.481';
+  $Gapp::VButtonBox::VERSION = '0.482';
 }
 
 use Moose;

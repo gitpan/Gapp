@@ -1,6 +1,6 @@
 package Gapp::TimeEntry;
 {
-  $Gapp::TimeEntry::VERSION = '0.481';
+  $Gapp::TimeEntry::VERSION = '0.482';
 }
 
 use Moose;
