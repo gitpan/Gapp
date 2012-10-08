@@ -1,6 +1,6 @@
 package Gapp::CellRenderer;
 {
-  $Gapp::CellRenderer::VERSION = '0.482';
+  $Gapp::CellRenderer::VERSION = '0.483';
 }
 
 use Moose;

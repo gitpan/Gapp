@@ -1,6 +1,6 @@
 package Gapp::Types;
 {
-  $Gapp::Types::VERSION = '0.482';
+  $Gapp::Types::VERSION = '0.483';
 }
 
 use MooseX::Types -declare => [qw(

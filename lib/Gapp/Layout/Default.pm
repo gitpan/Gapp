@@ -1,6 +1,6 @@
 package Gapp::Layout::Default;
 {
-  $Gapp::Layout::Default::VERSION = '0.482';
+  $Gapp::Layout::Default::VERSION = '0.483';
 }
 use Gapp::Layout;
 use strict;

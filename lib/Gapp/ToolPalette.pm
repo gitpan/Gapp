@@ -1,6 +1,6 @@
 package Gapp::ToolPalette;
 {
-  $Gapp::ToolPalette::VERSION = '0.482';
+  $Gapp::ToolPalette::VERSION = '0.483';
 }
 
 use Moose;

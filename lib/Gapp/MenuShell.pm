@@ -1,6 +1,6 @@
 package Gapp::MenuShell;
 {
-  $Gapp::MenuShell::VERSION = '0.482';
+  $Gapp::MenuShell::VERSION = '0.483';
 }
 
 use Moose;

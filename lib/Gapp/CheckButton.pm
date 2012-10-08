@@ -1,6 +1,6 @@
 package Gapp::CheckButton;
 {
-  $Gapp::CheckButton::VERSION = '0.482';
+  $Gapp::CheckButton::VERSION = '0.483';
 }
 
 use Moose;

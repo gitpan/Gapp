@@ -1,6 +1,6 @@
 package Gapp::TreeView;
 {
-  $Gapp::TreeView::VERSION = '0.482';
+  $Gapp::TreeView::VERSION = '0.483';
 }
 
 use Moose;

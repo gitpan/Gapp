@@ -1,6 +1,6 @@
 package Gapp::Meta::Widget::Native::Role::HasAction;
 {
-  $Gapp::Meta::Widget::Native::Role::HasAction::VERSION = '0.482';
+  $Gapp::Meta::Widget::Native::Role::HasAction::VERSION = '0.483';
 }
 
 use Moose::Role;

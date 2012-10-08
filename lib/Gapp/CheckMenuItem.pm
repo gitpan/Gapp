@@ -1,6 +1,6 @@
 package Gapp::CheckMenuItem;
 {
-  $Gapp::CheckMenuItem::VERSION = '0.482';
+  $Gapp::CheckMenuItem::VERSION = '0.483';
 }
 
 use Moose;

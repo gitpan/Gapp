@@ -1,6 +1,6 @@
 package Gapp::Meta::Widget::Native::Role::HasMnemonic;
 {
-  $Gapp::Meta::Widget::Native::Role::HasMnemonic::VERSION = '0.482';
+  $Gapp::Meta::Widget::Native::Role::HasMnemonic::VERSION = '0.483';
 }
 
 use Moose::Role;

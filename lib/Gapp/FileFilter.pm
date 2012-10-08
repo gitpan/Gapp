@@ -1,6 +1,6 @@
 package Gapp::FileFilter;
 {
-  $Gapp::FileFilter::VERSION = '0.482';
+  $Gapp::FileFilter::VERSION = '0.483';
 }
 
 use Moose;

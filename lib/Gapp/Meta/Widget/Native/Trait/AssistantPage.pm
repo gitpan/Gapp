@@ -1,6 +1,6 @@
 package Gapp::Meta::Widget::Native::Trait::AssistantPage;
 {
-  $Gapp::Meta::Widget::Native::Trait::AssistantPage::VERSION = '0.482';
+  $Gapp::Meta::Widget::Native::Trait::AssistantPage::VERSION = '0.483';
 }
 
 use Moose::Role;
@@ -60,7 +60,7 @@ sub validate {
 
 package Gapp::Meta::Widget::Custom::Trait::AssistantPage;
 {
-  $Gapp::Meta::Widget::Custom::Trait::AssistantPage::VERSION = '0.482';
+  $Gapp::Meta::Widget::Custom::Trait::AssistantPage::VERSION = '0.483';
 }
 sub register_implementation { 'Gapp::Meta::Widget::Native::Trait::AssistantPage' };
 

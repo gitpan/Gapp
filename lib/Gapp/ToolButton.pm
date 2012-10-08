@@ -1,6 +1,6 @@
 package Gapp::ToolButton;
 {
-  $Gapp::ToolButton::VERSION = '0.482';
+  $Gapp::ToolButton::VERSION = '0.483';
 }
 
 use Moose;

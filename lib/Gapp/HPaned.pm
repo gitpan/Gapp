@@ -1,6 +1,6 @@
 package Gapp::HPaned;
 {
-  $Gapp::HPaned::VERSION = '0.482';
+  $Gapp::HPaned::VERSION = '0.483';
 }
 
 use Moose;

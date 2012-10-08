@@ -1,6 +1,6 @@
 package Gapp::Moose::Meta::Attribute::Trait::GappMenuToolButton;
 {
-  $Gapp::Moose::Meta::Attribute::Trait::GappMenuToolButton::VERSION = '0.482';
+  $Gapp::Moose::Meta::Attribute::Trait::GappMenuToolButton::VERSION = '0.483';
 }
 use Moose::Role;
 
@@ -11,7 +11,7 @@ before '_process_options' => sub {
 
 package Moose::Meta::Attribute::Custom::Trait::GappMenuToolButton;
 {
-  $Moose::Meta::Attribute::Custom::Trait::GappMenuToolButton::VERSION = '0.482';
+  $Moose::Meta::Attribute::Custom::Trait::GappMenuToolButton::VERSION = '0.483';
 }
 sub register_implementation { 'Gapp::Moose::Meta::Attribute::Trait::GappMenuToolButton' };
 1;

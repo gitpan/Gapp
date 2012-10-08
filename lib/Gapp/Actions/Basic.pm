@@ -1,6 +1,6 @@
 package Gapp::Actions::Basic;
 {
-  $Gapp::Actions::Basic::VERSION = '0.482';
+  $Gapp::Actions::Basic::VERSION = '0.483';
 }
 
 use Gapp::Actions -declare => [qw(

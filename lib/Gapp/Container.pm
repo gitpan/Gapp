@@ -1,6 +1,6 @@
 package Gapp::Container;
 {
-  $Gapp::Container::VERSION = '0.482';
+  $Gapp::Container::VERSION = '0.483';
 }
 
 use Moose;

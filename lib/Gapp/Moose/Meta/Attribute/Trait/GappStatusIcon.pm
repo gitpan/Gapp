@@ -1,6 +1,6 @@
 package Gapp::Moose::Meta::Attribute::Trait::GappStatusIcon;
 {
-  $Gapp::Moose::Meta::Attribute::Trait::GappStatusIcon::VERSION = '0.482';
+  $Gapp::Moose::Meta::Attribute::Trait::GappStatusIcon::VERSION = '0.483';
 }
 use Moose::Role;
 
@@ -11,7 +11,7 @@ before '_process_options' => sub {
 
 package Moose::Meta::Attribute::Custom::Trait::GappStatusIcon;
 {
-  $Moose::Meta::Attribute::Custom::Trait::GappStatusIcon::VERSION = '0.482';
+  $Moose::Meta::Attribute::Custom::Trait::GappStatusIcon::VERSION = '0.483';
 }
 sub register_implementation { 'Gapp::Moose::Meta::Attribute::Trait::GappStatusIcon' };
 1;
