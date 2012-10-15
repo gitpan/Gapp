@@ -1,6 +1,6 @@
 package Gapp::Moose::Meta::Attribute::Trait::GappWidget;
 {
-  $Gapp::Moose::Meta::Attribute::Trait::GappWidget::VERSION = '0.484';
+  $Gapp::Moose::Meta::Attribute::Trait::GappWidget::VERSION = '0.487';
 }
 use Moose::Role;
 
@@ -53,12 +53,14 @@ before '_process_options' => sub {
             return $w;
         };
     }
+    $opts->{is} = 'ro' if ! exists $opts->{is};
+    $opts->{lazy} = 1 if ! exists $opts->{lazy};
     
 };
 
 package Moose::Meta::Attribute::Custom::Trait::GappWidget;
 {
-  $Moose::Meta::Attribute::Custom::Trait::GappWidget::VERSION = '0.484';
+  $Moose::Meta::Attribute::Custom::Trait::GappWidget::VERSION = '0.487';
 }
 sub register_implementation { 'Gapp::Moose::Meta::Attribute::Trait::GappWidget' };
 

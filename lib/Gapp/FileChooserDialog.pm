@@ -1,6 +1,6 @@
 package Gapp::FileChooserDialog;
 {
-  $Gapp::FileChooserDialog::VERSION = '0.484';
+  $Gapp::FileChooserDialog::VERSION = '0.487';
 }
 
 use Moose;

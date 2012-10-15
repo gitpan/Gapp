@@ -1,6 +1,6 @@
 package Gapp::Container;
 {
-  $Gapp::Container::VERSION = '0.484';
+  $Gapp::Container::VERSION = '0.487';
 }
 
 use Moose;
@@ -18,14 +18,22 @@ has 'content' => (
         my ( $self, $content ) = @_;
         map {
             confess 'cannot add undefined value to ' . $self if ! $_;
-
             $_->set_parent( $self );
         } @$content;
+    },
+    initializer => sub {
+        my ( $self, $content, $writer ) = @_;
+        map {
+            confess 'cannot add undefined value to ' . $self if ! $_;
+            $_->set_parent( $self );
+        } @$content;
+        return $writer->($content);
     },
     handles => {
         _add_content => 'push',
         children => 'elements',
-    }
+    },
+    lazy => 1,
 );
 
 
@@ -55,7 +63,7 @@ after '_build_gobject' => sub {
     my $self = shift;
     
     for ( @{$self->content} ) {
-        $_->set_parent( $self );
+        #$_->set_parent( $self );
         $self->find_layout->pack_widget( $_, $self);
     }
 };
@@ -63,6 +71,8 @@ after '_build_gobject' => sub {
 sub add {
     my ( $self, @args ) = @_;
     
+    # TODO: SHOULD JUST ADD TO CONTENT ARRAY IF OBJECT NOT BUILD
+    # IF OBJECT IS BUILT, THEN PACK IMEDIATELY
     for ( @args ) {
         $_->set_parent ( $self );
         

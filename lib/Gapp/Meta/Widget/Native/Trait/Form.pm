@@ -1,6 +1,6 @@
 package Gapp::Meta::Widget::Native::Trait::Form;
 {
-  $Gapp::Meta::Widget::Native::Trait::Form::VERSION = '0.484';
+  $Gapp::Meta::Widget::Native::Trait::Form::VERSION = '0.487';
 }
 
 use Moose::Role;
@@ -172,6 +172,7 @@ sub update {
         $w->stash_to_widget( $self->stash ) if $w->field;
         $w->set_is_updating( 0 );
     }
+    
 }
 
 
@@ -191,6 +192,8 @@ sub sync_stash {
     for my $w ( $self->find_fields ) {
         $w->widget_to_stash( $stash ) if $w->field;
     }
+    
+    #$stash->set_modified( 1 );
 }
 
 
@@ -198,7 +201,7 @@ sub sync_stash {
 
 package Gapp::Meta::Widget::Custom::Trait::Form;
 {
-  $Gapp::Meta::Widget::Custom::Trait::Form::VERSION = '0.484';
+  $Gapp::Meta::Widget::Custom::Trait::Form::VERSION = '0.487';
 }
 sub register_implementation { 'Gapp::Meta::Widget::Native::Trait::Form' };
 

@@ -1,6 +1,6 @@
 package Gapp::Meta::Widget::Native::Role::CanDefault;
 {
-  $Gapp::Meta::Widget::Native::Role::CanDefault::VERSION = '0.484';
+  $Gapp::Meta::Widget::Native::Role::CanDefault::VERSION = '0.487';
 }
 
 use Moose::Role;

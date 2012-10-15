@@ -1,6 +1,6 @@
 package Gapp::Meta::Widget::Native::Trait::FromUIManager;
 {
-  $Gapp::Meta::Widget::Native::Trait::FromUIManager::VERSION = '0.484';
+  $Gapp::Meta::Widget::Native::Trait::FromUIManager::VERSION = '0.487';
 }
 
 use Moose::Role;
@@ -44,7 +44,7 @@ around '_construct_gobject' => sub {
 
 package Gapp::Meta::Widget::Custom::Trait::FromUIManager;
 {
-  $Gapp::Meta::Widget::Custom::Trait::FromUIManager::VERSION = '0.484';
+  $Gapp::Meta::Widget::Custom::Trait::FromUIManager::VERSION = '0.487';
 }
 sub register_implementation { 'Gapp::Meta::Widget::Native::Trait::FromUIManager' };
 

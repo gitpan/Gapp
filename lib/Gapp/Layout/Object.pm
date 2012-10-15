@@ -1,6 +1,6 @@
 package Gapp::Layout::Object;
 {
-  $Gapp::Layout::Object::VERSION = '0.484';
+  $Gapp::Layout::Object::VERSION = '0.487';
 }
 
 use Moose;
@@ -64,6 +64,13 @@ has '_packers' => (
     traits   => [ 'Hash' ],
 );
 
+# the "packer" is a code ref that is called to
+# add a widget to a container 
+sub add_packer {
+    my ( $self, $widget, $container, $code_ref ) = @_;
+    $self->_packers->{$widget}{$container} = $code_ref;
+}
+
 sub build_widget {
     my ( $self, $widget, $opts ) = @_;
     my $builder = $self->find_builder( $widget );
@@ -73,15 +80,10 @@ sub build_widget {
     $builder->( $self, $widget );
 }
 
-# the "packer" is a code ref that is called to
-# add a widget to a container 
-sub add_packer {
-    my ( $self, $widget, $container, $code_ref ) = @_;
-    $self->_packers->{$widget}{$container} = $code_ref;
-}
 
 
-# search this layout and parent layouts for a packer that will DWIM
+
+# search this layout and parent layouts for a builder that will DWIM
 sub find_builder {
     my ( $self, $w, $opts ) = @_;
     $w = $w->meta->name if ref $w;
@@ -156,15 +158,26 @@ sub find_painter {
     return $self->parent ? $self->parent->find_painter( $w ) : undef;
 }
 
+# search this layout and parent layouts for a builder that will DWIM
 sub find_styler {
-    my ( $self, $w ) = @_;
+    my ( $self, $w, $opts ) = @_;
     $w = $w->meta->name if ref $w;
-    
-    $w = ($w->meta->superclasses)[0]->meta->name if $w =~ /__ANON__/;
-    return $self->get_styler( $w->meta->name ) if $self->get_styler( $w->meta->name );
-    return $self->parent ? $self->parent->find_styler( $w ) : undef;
-}
 
+    # work around for dealing with classes that have traits applied
+    if ( $w =~ /__ANON__/ ) {
+        my ( $super ) = ( $w->meta->superclasses )[0];
+        $w = $super->meta->name;
+    }
+    
+    # widget superclasses ( minus Moose stuff )
+    my @wisa = $w->meta->linearized_isa;
+    splice @wisa,-1,1;
+    
+    for my $wclass ( @wisa ) {
+        my $styler = $self->lookup_styler( $wclass );
+        return $styler if $styler;
+    }
+}
 
 
 sub get_packer {
@@ -205,6 +218,19 @@ sub lookup_packer {
     }
 }
 
+sub lookup_styler {
+    my ( $self, $w ) = @_;
+    
+    if ( $self->has_styler( $w ) ) {
+        return $self->get_styler( $w );
+    }
+    else {
+        return $self->parent ?
+        $self->parent->lookup_styler( $w ) :
+        undef;
+    }
+}
+
 
 
 
@@ -230,7 +256,7 @@ sub pack_widget {
 sub paint_widget {
     my ( $self, $widget, $opts ) = @_;
     my $painter = $self->find_painter( $opts->{as} ||  $widget );
-    return if ! defined $painter;
+    return if ! $painter;
     
     $painter->( $self, $widget );
 }
@@ -238,7 +264,7 @@ sub paint_widget {
 sub style_widget {
     my ( $self, $widget, $opts ) = @_;
     my $builder = $self->find_styler( $opts->{as} ||  $widget );
-    return if ! defined $builder;
+    return if ! $builder;
     
     $builder->( $self, $widget );
 }

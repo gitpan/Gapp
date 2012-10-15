@@ -1,6 +1,6 @@
 package Gapp::TreeView;
 {
-  $Gapp::TreeView::VERSION = '0.484';
+  $Gapp::TreeView::VERSION = '0.487';
 }
 
 use Moose;
@@ -69,10 +69,13 @@ after '_build_gobject' => sub {
     my $self = shift;
 
     for my $c ( @{ $self->columns } ) {
+        $c = to_GappTreeViewColumn( $c ) if ! is_GappTreeViewColumn( $c );
         $self->gobject->append_column( $c->gobject );
         $self->gobject->{columns}{$c->name} = $c->gobject;
     }
 };
+
+
 
 sub find_column {
     my ( $self, $cname ) = @_;
@@ -88,7 +91,7 @@ sub get_selected {
     my ( $self ) = @_;
     
     my @records;
-    $self->view->gobject->get_selection->selected_foreach( sub{
+    $self->gobject->get_selection->selected_foreach( sub{
         my ( $model, $path, $iter ) = @_;
         push @records, $model->get( $iter );
     });

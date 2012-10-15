@@ -1,6 +1,6 @@
 package Gapp::Toolbar;
 {
-  $Gapp::Toolbar::VERSION = '0.484';
+  $Gapp::Toolbar::VERSION = '0.487';
 }
 
 use Moose;

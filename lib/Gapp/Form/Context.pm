@@ -1,6 +1,6 @@
 package Gapp::Form::Context;
 {
-  $Gapp::Form::Context::VERSION = '0.484';
+  $Gapp::Form::Context::VERSION = '0.487';
 }
 
 use Moose;

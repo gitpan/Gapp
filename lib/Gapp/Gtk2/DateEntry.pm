@@ -1,11 +1,10 @@
 package Gapp::Gtk2::DateEntry;
+{
+  $Gapp::Gtk2::DateEntry::VERSION = '0.487';
+}
 use strict;
 use warnings;
 use Carp;
-
-our $VERSION = 0.02;
-our $AUTHORITY = 'cpan:JHALLOCK';
-
 
 use Gtk2;
 use DateTime;

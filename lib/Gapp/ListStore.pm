@@ -1,6 +1,6 @@
 package Gapp::ListStore;
 {
-  $Gapp::ListStore::VERSION = '0.484';
+  $Gapp::ListStore::VERSION = '0.487';
 }
 
 use Moose;

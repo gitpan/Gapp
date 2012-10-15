@@ -1,6 +1,6 @@
 package Gapp::ComboBox;
 {
-  $Gapp::ComboBox::VERSION = '0.484';
+  $Gapp::ComboBox::VERSION = '0.487';
 }
 
 use Moose;

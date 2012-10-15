@@ -1,6 +1,6 @@
 package Gapp::Moose::Meta::Attribute::Trait::GappStatusbar;
 {
-  $Gapp::Moose::Meta::Attribute::Trait::GappStatusbar::VERSION = '0.484';
+  $Gapp::Moose::Meta::Attribute::Trait::GappStatusbar::VERSION = '0.487';
 }
 use Moose::Role;
 
@@ -11,7 +11,7 @@ before '_process_options' => sub {
 
 package Moose::Meta::Attribute::Custom::Trait::GappStatusbar;
 {
-  $Moose::Meta::Attribute::Custom::Trait::GappStatusbar::VERSION = '0.484';
+  $Moose::Meta::Attribute::Custom::Trait::GappStatusbar::VERSION = '0.487';
 }
 sub register_implementation { 'Gapp::Moose::Meta::Attribute::Trait::GappStatusbar' };
 1;

@@ -1,6 +1,6 @@
 package Gapp::Layout::Default;
 {
-  $Gapp::Layout::Default::VERSION = '0.484';
+  $Gapp::Layout::Default::VERSION = '0.487';
 }
 use Gapp::Layout;
 use strict;
@@ -432,7 +432,7 @@ style 'Gapp::MenuToolButton', sub {
     
     my $image = $w->image ?
     $w->image->gobject :
-    Gtk2::Image->new_from_stock( 'gtk-dialog-error' , $w->icon_size || 'large-toolbar' );
+    Gtk2::Image->new_from_stock( $w->icon || 'gtk-dialog-error' , $w->icon_size || 'large-toolbar' );
     
     $w->set_args( [ $image, defined $w->label ? $w->label : ''  ] );
 };
@@ -649,6 +649,11 @@ paint 'Gapp::ToolButton', sub {
     }
 };
 
+style 'Gapp::ToggleToolButton', sub {
+    my ( $l, $w ) = @_;
+};
+
+
 
 # TreeView
 
@@ -711,6 +716,12 @@ add 'Gapp::Widget', to 'Gapp::Container', sub {
     my ($l,  $w, $c) = @_;
     $c->gobject->pack_start( $w->gwrapper, $w->expand, $w->fill, $w->padding );
 };
+
+add 'Gapp::Widget', to 'Gapp::Expander', sub {
+    my ($l,  $w, $c ) = @_;
+    $c->gobject->add( $w->gwrapper );
+};
+
 
 add 'Gapp::Widget', to 'Gapp::HBox', sub {
     my ($l,  $w, $c ) = @_;

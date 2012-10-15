@@ -1,6 +1,6 @@
 package Gapp;
 {
-  $Gapp::VERSION = '0.484';
+  $Gapp::VERSION = '0.487';
 }
 
 use Gtk2 '-init';
@@ -17,6 +17,7 @@ use Gapp::ComboBox;
 use Gapp::DateEntry;
 use Gapp::Dialog;
 use Gapp::Entry;
+use Gapp::Expander;
 use Gapp::EventBox;
 use Gapp::FileChooserDialog;
 use Gapp::FileFilter;

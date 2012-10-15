@@ -38,6 +38,7 @@ lib/Gapp/DateEntry.pm
 lib/Gapp/Dialog.pm
 lib/Gapp/Entry.pm
 lib/Gapp/EventBox.pm
+lib/Gapp/Expander.pm
 lib/Gapp/FileChooserDialog.pm
 lib/Gapp/FileFilter.pm
 lib/Gapp/Form/Context.pm
@@ -96,12 +97,15 @@ lib/Gapp/Moose/Meta/Attribute/Trait/GappActionGroup.pm
 lib/Gapp/Moose/Meta/Attribute/Trait/GappAssistant.pm
 lib/Gapp/Moose/Meta/Attribute/Trait/GappBox.pm
 lib/Gapp/Moose/Meta/Attribute/Trait/GappButton.pm
+lib/Gapp/Moose/Meta/Attribute/Trait/GappCheckButton.pm
 lib/Gapp/Moose/Meta/Attribute/Trait/GappCheckMenuItem.pm
 lib/Gapp/Moose/Meta/Attribute/Trait/GappComboBox.pm
 lib/Gapp/Moose/Meta/Attribute/Trait/GappDateEntry.pm
 lib/Gapp/Moose/Meta/Attribute/Trait/GappDefault.pm
 lib/Gapp/Moose/Meta/Attribute/Trait/GappDialog.pm
+lib/Gapp/Moose/Meta/Attribute/Trait/GappEntry.pm
 lib/Gapp/Moose/Meta/Attribute/Trait/GappEventBox.pm
+lib/Gapp/Moose/Meta/Attribute/Trait/GappExpander.pm
 lib/Gapp/Moose/Meta/Attribute/Trait/GappFileChooserDialog.pm
 lib/Gapp/Moose/Meta/Attribute/Trait/GappFileFilter.pm
 lib/Gapp/Moose/Meta/Attribute/Trait/GappFrame.pm
@@ -228,6 +232,7 @@ t/0128_eventbox.t
 t/0129_date_entry.t
 t/0130_time_entry.t
 t/0131_ui_manager.t
+t/0132_expander.t
 t/0201_form_stash.t
 t/0202_form_context_node.t
 t/0203_form_context.t

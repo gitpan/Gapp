@@ -1,6 +1,6 @@
 package Gapp::RadioToolButton;
 {
-  $Gapp::RadioToolButton::VERSION = '0.484';
+  $Gapp::RadioToolButton::VERSION = '0.487';
 }
 
 use Moose;
@@ -32,7 +32,7 @@ sub _construct_gobject {
     undef;
     
     # use any build-arguments if they exist
-    my $w = $gtk_class->$gtk_constructor( $group, $self->args ? @{$self->args} : ( ) );
+    my $w = $gtk_class->$gtk_constructor( $group );
     $self->set_gobject( $w );
     
     # save the radio group in the parent

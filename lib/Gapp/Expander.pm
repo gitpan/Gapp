@@ -1,6 +1,6 @@
-package Gapp::Box;
+package Gapp::Expander;
 {
-  $Gapp::Box::VERSION = '0.487';
+  $Gapp::Expander::VERSION = '0.487';
 }
 
 use Moose;
@@ -9,14 +9,14 @@ use MooseX::SemiAffordanceAccessor;
 extends 'Gapp::Container';
 
 has '+gclass' => (
-    default => 'Gtk2::Box',
+    default => 'Gtk2::Expander',
 );
 
 sub BUILDARGS {
     my $class = shift;
     my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;
     
-    for my $att ( qw[spacing homogeneous] ) {
+    for my $att ( qw(expanded label label_fill spacing use_markup use_underline) ) {
         $args{properties}{$att} = delete $args{$att} if exists $args{$att};
     }
 
@@ -25,14 +25,13 @@ sub BUILDARGS {
 
 1;
 
-
 __END__
 
 =pod
 
 =head1 NAME
 
-Gapp::Box - Box widget
+Gapp::Expander - Expander widget
 
 =head1 OBJECT HIERARCHY
 
@@ -44,7 +43,9 @@ Gapp::Box - Box widget
 
 =item ....+-- L<Gapp::Container>
 
-=item ........+-- Gapp::Box
+=item ........+-- L<Gapp::Bin>
+
+=item ............+-- Gapp::Expander
 
 =back
 
@@ -52,9 +53,17 @@ Gapp::Box - Box widget
 
 =over 4
 
-=item spacing
+=item b<expanded>
 
-=item homogeneous
+=item b<label>
+
+=item b<label_fill>
+
+=item b<spacing>
+
+=item b<use_markup>
+
+=item b<use_underline>
 
 =back
 

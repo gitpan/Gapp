@@ -1,6 +1,6 @@
 package Gapp::Moose::Meta::Attribute::Trait::GappDateEntry;
 {
-  $Gapp::Moose::Meta::Attribute::Trait::GappDateEntry::VERSION = '0.484';
+  $Gapp::Moose::Meta::Attribute::Trait::GappDateEntry::VERSION = '0.487';
 }
 use Moose::Role;
 
@@ -11,7 +11,7 @@ before '_process_options' => sub {
 
 package Moose::Meta::Attribute::Custom::Trait::GappDateEntry;
 {
-  $Moose::Meta::Attribute::Custom::Trait::GappDateEntry::VERSION = '0.484';
+  $Moose::Meta::Attribute::Custom::Trait::GappDateEntry::VERSION = '0.487';
 }
 sub register_implementation { 'Gapp::Moose::Meta::Attribute::Trait::GappDateEntry' };
 1;

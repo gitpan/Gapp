@@ -1,6 +1,6 @@
 package Gapp::Object;
 {
-  $Gapp::Object::VERSION = '0.484';
+  $Gapp::Object::VERSION = '0.487';
 }
 
 use Moose;
