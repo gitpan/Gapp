@@ -1,6 +1,6 @@
 package Gapp::Widget;
 {
-  $Gapp::Widget::VERSION = '0.487';
+  $Gapp::Widget::VERSION = '0.494';
 }
 
 use Moose;
@@ -16,6 +16,13 @@ has 'name' => (
     is => 'rw',
     isa => 'Str',
     default => '',
+);
+
+# if the widget should be homogenous
+has 'homogeneous' => (
+    is => 'rw',
+    isa => 'Bool',
+    default => 0,
 );
 
 # if the widget should expand its container

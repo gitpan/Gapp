@@ -1,6 +1,6 @@
 package Gapp::Types;
 {
-  $Gapp::Types::VERSION = '0.487';
+  $Gapp::Types::VERSION = '0.494';
 }
 
 use MooseX::Types -declare => [qw(
@@ -13,19 +13,22 @@ GappActionOrArrayRef
 GappCallback
 GappCellRenderer
 GappContainer
+GappContent
 GappDialog
 GappDialogImage
 GappLayout
 GappLayoutOrUndef
 GappImage
+GappMenu
 GappNoticeImage
 GappTableMap
 GappTreeViewColumn
 GappUIManager
 GappWidget
+MaybeGappMenu
 )];
 
-use MooseX::Types::Moose qw( ArrayRef ClassName CodeRef HashRef Int Str );
+use MooseX::Types::Moose qw( ArrayRef ClassName CodeRef HashRef Int Object Str );
 
 # GappAction
 class_type GappAction,
@@ -40,6 +43,13 @@ subtype GappCallback,
 # GappContainer
 class_type GappContainer,
     { class => 'Gapp::Container' };
+    
+subtype GappContent,
+    as ArrayRef;
+
+coerce GappContent,
+    from Object,
+    via { [ $_ ] };
     
 # GappDialog
 class_type GappDialog,
@@ -60,6 +70,17 @@ coerce GappDialogImage,
             stock => [ $_, 'dialog' ],
         );
     };
+    
+# GappImage
+class_type GappMenu,
+    { class => 'Gapp::Menu' };
+    
+subtype MaybeGappMenu,
+    as GappMenu;
+    
+coerce MaybeGappMenu,
+    from ArrayRef,
+    via { Gapp::Menu->new( content => $_ ) };
     
 # GappDialogImage
 subtype GappNoticeImage,

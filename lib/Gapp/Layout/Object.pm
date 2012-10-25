@@ -1,6 +1,6 @@
 package Gapp::Layout::Object;
 {
-  $Gapp::Layout::Object::VERSION = '0.487';
+  $Gapp::Layout::Object::VERSION = '0.494';
 }
 
 use Moose;

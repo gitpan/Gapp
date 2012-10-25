@@ -1,9 +1,9 @@
 package Gapp::Moose::Meta::Attribute::Trait::TearoffMenuItem;
 {
-  $Gapp::Moose::Meta::Attribute::Trait::TearoffMenuItem::VERSION = '0.487';
+  $Gapp::Moose::Meta::Attribute::Trait::TearoffMenuItem::VERSION = '0.494';
 }
 {
-  $Gapp::Moose::Meta::Attribute::Trait::TearoffMenuItem::VERSION = '0.487';
+  $Gapp::Moose::Meta::Attribute::Trait::TearoffMenuItem::VERSION = '0.494';
 }
 use Moose::Role;
 
@@ -14,10 +14,10 @@ before '_process_options' => sub {
 
 package Moose::Meta::Attribute::Custom::Trait::GappTearoffMenuItem;
 {
-  $Moose::Meta::Attribute::Custom::Trait::GappTearoffMenuItem::VERSION = '0.487';
+  $Moose::Meta::Attribute::Custom::Trait::GappTearoffMenuItem::VERSION = '0.494';
 }
 {
-  $Moose::Meta::Attribute::Custom::Trait::GappTearoffMenuItem::VERSION = '0.487';
+  $Moose::Meta::Attribute::Custom::Trait::GappTearoffMenuItem::VERSION = '0.494';
 }
 sub register_implementation { 'Gapp::Moose::Meta::Attribute::Trait::GappTearoffMenuItem' };
 1;

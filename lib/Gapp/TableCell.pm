@@ -1,6 +1,6 @@
 package Gapp::TableCell;
 {
-  $Gapp::TableCell::VERSION = '0.487';
+  $Gapp::TableCell::VERSION = '0.494';
 }
 
 use Moose;

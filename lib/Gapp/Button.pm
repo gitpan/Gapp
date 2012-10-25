@@ -1,6 +1,6 @@
 package Gapp::Button;
 {
-  $Gapp::Button::VERSION = '0.487';
+  $Gapp::Button::VERSION = '0.494';
 }
 
 use Moose;
@@ -33,6 +33,10 @@ sub BUILDARGS {
     if ( exists $args{label} && ! $args{args} ) {
         $args{args} = [ $args{label} ];
         $args{constructor} = 'new_with_label';
+    }
+    
+    for my $att ( qw( can_default has_default ) ) {
+        $args{properties}{$att} = delete $args{$att} if exists $args{$att};
     }
     
     __PACKAGE__->SUPER::BUILDARGS( %args );

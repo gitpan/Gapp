@@ -1,6 +1,6 @@
 package Gapp::Moose::Role;
 {
-  $Gapp::Moose::Role::VERSION = '0.487';
+  $Gapp::Moose::Role::VERSION = '0.494';
 }
 
 use Moose::Role;

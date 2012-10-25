@@ -1,6 +1,6 @@
 package Gapp::Frame;
 {
-  $Gapp::Frame::VERSION = '0.487';
+  $Gapp::Frame::VERSION = '0.494';
 }
 
 use Moose;

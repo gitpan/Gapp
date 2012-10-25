@@ -1,6 +1,6 @@
 package Gapp::TreeStore;
 {
-  $Gapp::TreeStore::VERSION = '0.487';
+  $Gapp::TreeStore::VERSION = '0.494';
 }
 
 use Moose;

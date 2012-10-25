@@ -1,6 +1,6 @@
 package Gapp::ComboBox;
 {
-  $Gapp::ComboBox::VERSION = '0.487';
+  $Gapp::ComboBox::VERSION = '0.494';
 }
 
 use Moose;
@@ -32,7 +32,7 @@ has 'data_func' => (
 has 'model' => (
     is => 'rw',
     isa => 'Maybe[Object]',
-    default => sub { Gapp::Model::SimpleList->new },
+    #default => sub { Gapp::Model::SimpleList->new },
 );
 
 has 'renderer' => (

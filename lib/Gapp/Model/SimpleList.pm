@@ -1,6 +1,6 @@
 package Gapp::Model::SimpleList;
 {
-  $Gapp::Model::SimpleList::VERSION = '0.487';
+  $Gapp::Model::SimpleList::VERSION = '0.494';
 }
 
 use Moose;

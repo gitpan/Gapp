@@ -1,6 +1,6 @@
 package Gapp::Moose::Meta::Attribute::Trait::GappListStore;
 {
-  $Gapp::Moose::Meta::Attribute::Trait::GappListStore::VERSION = '0.487';
+  $Gapp::Moose::Meta::Attribute::Trait::GappListStore::VERSION = '0.494';
 }
 use Moose::Role;
 
@@ -11,7 +11,7 @@ before '_process_options' => sub {
 
 package Moose::Meta::Attribute::Custom::Trait::GappListStore;
 {
-  $Moose::Meta::Attribute::Custom::Trait::GappListStore::VERSION = '0.487';
+  $Moose::Meta::Attribute::Custom::Trait::GappListStore::VERSION = '0.494';
 }
 sub register_implementation { 'Gapp::Moose::Meta::Attribute::Trait::GappListStore' };
 1;

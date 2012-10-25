@@ -1,6 +1,6 @@
 package Gapp::Meta::Widget::Native::Trait::Form;
 {
-  $Gapp::Meta::Widget::Native::Trait::Form::VERSION = '0.487';
+  $Gapp::Meta::Widget::Native::Trait::Form::VERSION = '0.494';
 }
 
 use Moose::Role;
@@ -92,7 +92,7 @@ sub do_apply_action {
     my ( $self ) = @_;
     return if ! $self->apply_action;
     
-    my ( $action, @args ) = parse_action ( $self->cancel_action );
+    my ( $action, @args ) = parse_action ( $self->apply_action );
     return if ! $action;
     
     if ( is_CodeRef ( $action ) ) {
@@ -166,13 +166,20 @@ sub update {
     # update the stash if we have a context
     $self->stash->update( $self->context ) if $self->context;
     
+    # update the widgets from the stash
+    $self->update_from_stash;
+}
+
+# update the values in the form (don't update the stash first)
+sub update_from_stash {
+    my ( $self ) = @_;
+    
     # update the values in the form
     for my $w ( $self->find_fields ) {
         $w->set_is_updating( 1 );
         $w->stash_to_widget( $self->stash ) if $w->field;
         $w->set_is_updating( 0 );
     }
-    
 }
 
 
@@ -201,7 +208,7 @@ sub sync_stash {
 
 package Gapp::Meta::Widget::Custom::Trait::Form;
 {
-  $Gapp::Meta::Widget::Custom::Trait::Form::VERSION = '0.487';
+  $Gapp::Meta::Widget::Custom::Trait::Form::VERSION = '0.494';
 }
 sub register_implementation { 'Gapp::Meta::Widget::Native::Trait::Form' };
 

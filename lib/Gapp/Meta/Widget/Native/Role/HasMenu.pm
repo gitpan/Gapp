@@ -1,14 +1,17 @@
 package Gapp::Meta::Widget::Native::Role::HasMenu;
 {
-  $Gapp::Meta::Widget::Native::Role::HasMenu::VERSION = '0.487';
+  $Gapp::Meta::Widget::Native::Role::HasMenu::VERSION = '0.494';
 }
 
 use Moose::Role;
 use MooseX::SemiAffordanceAccessor;
 
+use Gapp::Types qw( MaybeGappMenu );
+
 has 'menu' => (
     is => 'rw',
-    isa => 'Maybe[Gapp::Menu]',
+    isa => MaybeGappMenu,
+    coerce => 1,
     trigger => sub {
         my ( $self, $value ) = @_;
         return if ! defined $value;

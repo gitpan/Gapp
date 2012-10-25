@@ -1,6 +1,6 @@
 package Gapp::Layout::Default;
 {
-  $Gapp::Layout::Default::VERSION = '0.487';
+  $Gapp::Layout::Default::VERSION = '0.494';
 }
 use Gapp::Layout;
 use strict;
@@ -118,6 +118,12 @@ paint 'Gapp::Button', sub {
 build 'Gapp::ComboBox', sub {
     my ( $l, $w ) = @_;
     my $gtkw = $w->gobject;
+    
+    
+    if ( ! $w->model ) {
+	my $model = Gapp::Model::SimpleList->new;
+	$w->set_model( $model )
+    }
     
     my $model = $w->model->isa('Gapp::Object') ? $w->model->gobject : $w->model;
     
@@ -447,7 +453,7 @@ build 'Gapp::MenuToolButton', sub {
     $gtkw->set_stock_id( $w->stock_id ) if $w->stock_id;
     $gtkw->set_label( $w->label ) if defined $w->label;
     $gtkw->set_tooltip_text( $w->tooltip ) if defined $w->tooltip;
-    
+    $gtkw->set_homogeneous( 1 ) if $w->homogeneous;
     $w->menu->gwrapper->show_all if $w->menu;
 };
 
@@ -606,6 +612,7 @@ build 'Gapp::Toolbar', sub {
 add 'Gapp::ToolItem', to 'Gapp::Toolbar', sub {
     my ($l,  $w, $c) = @_;
     $c->gobject->insert( $w->gwrapper, -1 );
+    $c->gobject->child_set_property( $w->gwrapper, 'homogeneous',  1 );
 };
 
 
@@ -629,6 +636,7 @@ build 'Gapp::ToolButton', sub {
     $gtkw->set_stock_id( $w->stock_id ) if $w->stock_id;
     $gtkw->set_label( $w->label ) if defined $w->label;
     $gtkw->set_tooltip_text( $w->tooltip ) if defined $w->tooltip;
+    $gtkw->set_homogeneous( 1 ) if $w->homogeneous;
 };
 
 paint 'Gapp::ToolButton', sub {

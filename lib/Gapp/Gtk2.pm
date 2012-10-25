@@ -1,14 +1,13 @@
 package Gapp::Gtk2;
+{
+  $Gapp::Gtk2::VERSION = '0.494';
+}
 
 use Gtk2;
 use Gapp::Gtk2::DateEntry;
 use Gapp::Gtk2::TimeEntry;
 use Gapp::Gtk2::Model::List;
 use Gapp::Gtk2::Model::SimpleList;
-
-our $VERSION = 0.01;
-our $AUTHORITY = 'cpan:JHALLOCK';
-
 
 1;
 

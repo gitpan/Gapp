@@ -1,6 +1,6 @@
 package Gapp::Container;
 {
-  $Gapp::Container::VERSION = '0.487';
+  $Gapp::Container::VERSION = '0.494';
 }
 
 use Moose;
@@ -8,10 +8,12 @@ use MooseX::SemiAffordanceAccessor;
 
 extends 'Gapp::Widget';
 
+use Gapp::Types qw( GappContent );
+
 # the contents of the widget
 has 'content' => (
     is => 'rw',
-    isa => 'ArrayRef',
+    isa => GappContent,
     default => sub { [ ] },
     traits => [qw( Array )],
     trigger => sub {

@@ -1,6 +1,6 @@
 package Gapp::Paned;
 {
-  $Gapp::Paned::VERSION = '0.487';
+  $Gapp::Paned::VERSION = '0.494';
 }
 
 use Moose;

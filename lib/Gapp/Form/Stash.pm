@@ -1,6 +1,6 @@
 package Gapp::Form::Stash;
 {
-  $Gapp::Form::Stash::VERSION = '0.487';
+  $Gapp::Form::Stash::VERSION = '0.494';
 }
 
 use Moose;

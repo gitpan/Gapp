@@ -1,6 +1,6 @@
 package Gapp::Expander;
 {
-  $Gapp::Expander::VERSION = '0.487';
+  $Gapp::Expander::VERSION = '0.494';
 }
 
 use Moose;
