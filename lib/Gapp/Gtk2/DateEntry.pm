@@ -1,6 +1,6 @@
 package Gapp::Gtk2::DateEntry;
 {
-  $Gapp::Gtk2::DateEntry::VERSION = '0.494';
+  $Gapp::Gtk2::DateEntry::VERSION = '0.60';
 }
 use strict;
 use warnings;
@@ -88,7 +88,8 @@ sub set_today {
     my ($hour, $minute) = (localtime time)[2,1];
     
     my $obj   = $self->{datetime};
-    my $today = DateTime->now;
+    my $today = DateTime->now( time_zone => 'floating' );
+    $today->set( hour => 0, minute => 0, second => 0 );
     
     if ($obj && $obj->ymd eq $today->ymd) {
         return;
@@ -353,7 +354,7 @@ sub _parse_input {
     
     # fill in missing values using the currently set date, or the current date
     my $obj = $self->{datetime};
-    $obj = $obj ? $obj : DateTime->now;
+    $obj = $obj ? $obj : DateTime->now( time_zone => 'floating' );
     
     my ($cd, $cm, $cy);
     $cd = $obj->day;
@@ -364,7 +365,7 @@ sub _parse_input {
     $d = $d ? $d : $cd;
     $y = $y ? $y : $cy;
 
-    return DateTime->new(day => $d, month => $m, year => $y);
+    return DateTime->new(day => $d, month => $m, year => $y, time_zone => 'floating' );
 }
 
 

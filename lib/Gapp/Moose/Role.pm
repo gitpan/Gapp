@@ -1,6 +1,6 @@
 package Gapp::Moose::Role;
 {
-  $Gapp::Moose::Role::VERSION = '0.494';
+  $Gapp::Moose::Role::VERSION = '0.60';
 }
 
 use Moose::Role;
@@ -19,6 +19,7 @@ use Gapp::Moose::Meta::Attribute::Trait::GappDateEntry;
 use Gapp::Moose::Meta::Attribute::Trait::GappEntry;
 use Gapp::Moose::Meta::Attribute::Trait::GappEventBox;
 use Gapp::Moose::Meta::Attribute::Trait::GappExpander;
+use Gapp::Moose::Meta::Attribute::Trait::GappFileChooserButton;
 use Gapp::Moose::Meta::Attribute::Trait::GappFileChooserDialog;
 use Gapp::Moose::Meta::Attribute::Trait::GappFileFilter;
 use Gapp::Moose::Meta::Attribute::Trait::GappFrame;

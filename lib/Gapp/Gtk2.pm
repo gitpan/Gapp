@@ -1,6 +1,6 @@
 package Gapp::Gtk2;
 {
-  $Gapp::Gtk2::VERSION = '0.494';
+  $Gapp::Gtk2::VERSION = '0.60';
 }
 
 use Gtk2;

@@ -1,6 +1,6 @@
 package Gapp::FileChooserDialog;
 {
-  $Gapp::FileChooserDialog::VERSION = '0.494';
+  $Gapp::FileChooserDialog::VERSION = '0.60';
 }
 
 use Moose;
@@ -8,6 +8,7 @@ use MooseX::SemiAffordanceAccessor;
 use MooseX::Types::Moose qw( ArrayRef );
 
 extends 'Gapp::Dialog';
+with 'Gapp::Meta::Widget::Native::Role::FileChooser';
 
 has '+gclass' => (
     default => 'Gtk2::FileChooserDialog',
@@ -23,28 +24,11 @@ has '+parent' => (
     default => undef,
 );
 
-has 'action' => (
-    is => 'rw',
-    isa => 'Str',
-    default => 'open',
-);
-
-has 'filters' => (
-    isa => 'ArrayRef',
-    default => sub { [] },
-    traits => [qw( Array )],
-    handles => {
-        add_filter => 'push',
-        filters => 'elements',
-    }
-);
-
-
 
 before '_build_gobject' => sub {
     my $self = shift;
-    $self->set_args( [ $self->properties->{title} ? $self->properties->{title} : '' ,
-                      $self->parent ? $self->parent->gobject : undef,
+    $self->set_args( [ ( $self->properties->{title} ? $self->properties->{title} : '' ) ,
+                      ( $self->parent ? $self->parent->gobject : undef ),
                       $self->action ] );
 };
     

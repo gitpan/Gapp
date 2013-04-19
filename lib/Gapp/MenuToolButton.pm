@@ -1,6 +1,6 @@
 package Gapp::MenuToolButton;
 {
-  $Gapp::MenuToolButton::VERSION = '0.494';
+  $Gapp::MenuToolButton::VERSION = '0.60';
 }
 
 use Moose;

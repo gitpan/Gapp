@@ -1,6 +1,6 @@
 package Gapp::Meta::Widget::Native::Trait::ToggleListFormField;
 {
-  $Gapp::Meta::Widget::Native::Trait::ToggleListFormField::VERSION = '0.494';
+  $Gapp::Meta::Widget::Native::Trait::ToggleListFormField::VERSION = '0.60';
 }
 
 use Moose::Role;
@@ -91,7 +91,7 @@ sub _connect_changed_handler {
 
 package Gapp::Meta::Widget::Custom::Trait::ToggleListFormField;
 {
-  $Gapp::Meta::Widget::Custom::Trait::ToggleListFormField::VERSION = '0.494';
+  $Gapp::Meta::Widget::Custom::Trait::ToggleListFormField::VERSION = '0.60';
 }
 sub register_implementation { 'Gapp::Meta::Widget::Native::Trait::ToggleListFormField' };
 

@@ -1,6 +1,6 @@
 package Gapp::Image;
 {
-  $Gapp::Image::VERSION = '0.494';
+  $Gapp::Image::VERSION = '0.60';
 }
 
 use Moose;
@@ -12,10 +12,14 @@ has '+gclass' => (
     default => 'Gtk2::Image',
 );
 
+has 'file' => (
+    is => 'rw',
+    isa => 'Maybe[Str]',
+);
+
 has 'stock' => (
     is => 'rw',
-    isa => 'ArrayRef',
-    default => sub { [ ] },
+    isa => 'Maybe[ArrayRef]',
 );
 
 1;

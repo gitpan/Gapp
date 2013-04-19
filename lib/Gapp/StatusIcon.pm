@@ -1,6 +1,6 @@
 package Gapp::StatusIcon;
 {
-  $Gapp::StatusIcon::VERSION = '0.494';
+  $Gapp::StatusIcon::VERSION = '0.60';
 }
 
 use Moose;

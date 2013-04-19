@@ -1,6 +1,6 @@
 package Gapp::Layout::Default;
 {
-  $Gapp::Layout::Default::VERSION = '0.494';
+  $Gapp::Layout::Default::VERSION = '0.60';
 }
 use Gapp::Layout;
 use strict;
@@ -304,7 +304,10 @@ build 'Gapp::Image', sub {
     my ( $l, $w ) = @_;
     
     my $gtkw = $w->gobject;
-    if ( $w->stock ) {
+    if ( $w->file ) {
+	$gtkw->set_from_file( $w->file );
+    }
+    elsif ( $w->stock ) {
         $gtkw->set_from_stock( $w->stock->[0], $w->stock->[1] );
     }
 };
@@ -668,7 +671,10 @@ style 'Gapp::ToggleToolButton', sub {
 build 'Gapp::TreeView', sub {
     my ( $l, $w ) = @_;
     my $gtkw = $w->gobject;
-    $gtkw->set_model( $w->model->isa('Gapp::Object') ? $w->model->gobject : $w->model ) if $w->model;
+    
+    my $model = $w->model;
+    
+    $gtkw->set_model( $model->isa('Gapp::Object') ? $model->gobject : $model ) if $model;
 };
 
 # TreeViewColumn

@@ -1,6 +1,6 @@
 package Gapp::Moose::Meta::Attribute::Trait::GappRadioToolButton;
 {
-  $Gapp::Moose::Meta::Attribute::Trait::GappRadioToolButton::VERSION = '0.494';
+  $Gapp::Moose::Meta::Attribute::Trait::GappRadioToolButton::VERSION = '0.60';
 }
 use Moose::Role;
 
@@ -11,7 +11,7 @@ before '_process_options' => sub {
 
 package Moose::Meta::Attribute::Custom::Trait::GappRadioToolButton;
 {
-  $Moose::Meta::Attribute::Custom::Trait::GappRadioToolButton::VERSION = '0.494';
+  $Moose::Meta::Attribute::Custom::Trait::GappRadioToolButton::VERSION = '0.60';
 }
 sub register_implementation { 'Gapp::Moose::Meta::Attribute::Trait::GappRadioToolButton' };
 1;

@@ -1,6 +1,6 @@
 package Gapp::Gtk2::TimeEntry;
 {
-  $Gapp::Gtk2::TimeEntry::VERSION = '0.494';
+  $Gapp::Gtk2::TimeEntry::VERSION = '0.60';
 }
 use strict;
 use warnings;

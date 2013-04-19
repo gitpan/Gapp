@@ -1,6 +1,6 @@
 package Gapp::Widget;
 {
-  $Gapp::Widget::VERSION = '0.494';
+  $Gapp::Widget::VERSION = '0.60';
 }
 
 use Moose;
@@ -80,6 +80,11 @@ has 'tooltip' => (
     is => 'rw',
     isa => 'Maybe[Str]',
 );
+
+
+
+
+
 
 sub toplevel {
     my ( $self ) = @_;

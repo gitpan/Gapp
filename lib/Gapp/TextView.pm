@@ -1,6 +1,6 @@
 package Gapp::TextView;
 {
-  $Gapp::TextView::VERSION = '0.494';
+  $Gapp::TextView::VERSION = '0.60';
 }
 
 use Moose;
@@ -26,6 +26,17 @@ has 'get_hidden_chars' => (
     isa => 'Bool',
     default => 0,
 );
+
+sub BUILDARGS {
+    my $class = shift;
+    my %args = @_ == 1 && is_HashRef( $_[0] ) ? %{$_[0]} : @_;
+    
+    for my $att ( qw( accepts_tabs editable cursor_visible indent justification left_margin overwrite tabs wrap-mode ) ) {
+        $args{properties}{$att} = delete $args{$att} if exists $args{$att};
+    }
+
+    __PACKAGE__->SUPER::BUILDARGS( %args );
+}
 
 # returns the value of the widget
 sub get_field_value {

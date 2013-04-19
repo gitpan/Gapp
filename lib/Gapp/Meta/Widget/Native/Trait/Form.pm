@@ -1,6 +1,6 @@
 package Gapp::Meta::Widget::Native::Trait::Form;
 {
-  $Gapp::Meta::Widget::Native::Trait::Form::VERSION = '0.494';
+  $Gapp::Meta::Widget::Native::Trait::Form::VERSION = '0.60';
 }
 
 use Moose::Role;
@@ -208,7 +208,7 @@ sub sync_stash {
 
 package Gapp::Meta::Widget::Custom::Trait::Form;
 {
-  $Gapp::Meta::Widget::Custom::Trait::Form::VERSION = '0.494';
+  $Gapp::Meta::Widget::Custom::Trait::Form::VERSION = '0.60';
 }
 sub register_implementation { 'Gapp::Meta::Widget::Native::Trait::Form' };
 

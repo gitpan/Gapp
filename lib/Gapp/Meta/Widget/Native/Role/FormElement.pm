@@ -1,6 +1,6 @@
 package Gapp::Meta::Widget::Native::Role::FormElement;
 {
-  $Gapp::Meta::Widget::Native::Role::FormElement::VERSION = '0.494';
+  $Gapp::Meta::Widget::Native::Role::FormElement::VERSION = '0.60';
 }
 
 use Moose::Role;

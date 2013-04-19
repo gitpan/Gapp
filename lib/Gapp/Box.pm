@@ -1,6 +1,6 @@
 package Gapp::Box;
 {
-  $Gapp::Box::VERSION = '0.494';
+  $Gapp::Box::VERSION = '0.60';
 }
 
 use Moose;

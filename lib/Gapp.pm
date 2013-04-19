@@ -1,6 +1,6 @@
 package Gapp;
 {
-  $Gapp::VERSION = '0.494';
+  $Gapp::VERSION = '0.60';
 }
 
 use Gtk2 '-init';
@@ -19,6 +19,7 @@ use Gapp::Dialog;
 use Gapp::Entry;
 use Gapp::Expander;
 use Gapp::EventBox;
+use Gapp::FileChooserButton;
 use Gapp::FileChooserDialog;
 use Gapp::FileFilter;
 use Gapp::Form::Context;
@@ -78,6 +79,7 @@ use Gapp::Meta::Widget::Native::Trait::Form;
 use Gapp::Meta::Widget::Native::Trait::FromUIManager;
 use Gapp::Meta::Widget::Native::Trait::NotebookPage;
 use Gapp::Meta::Widget::Native::Trait::ListFormField;
+use Gapp::Meta::Widget::Native::Trait::Sensitivity;
 use Gapp::Meta::Widget::Native::Trait::ToggleListFormField;
 
 sub main { Gtk2->main };

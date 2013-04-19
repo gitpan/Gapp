@@ -1,6 +1,6 @@
 package Gapp::HBox;
 {
-  $Gapp::HBox::VERSION = '0.494';
+  $Gapp::HBox::VERSION = '0.60';
 }
 
 use Moose;

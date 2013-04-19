@@ -1,6 +1,6 @@
 package Gapp::Notebook;
 {
-  $Gapp::Notebook::VERSION = '0.494';
+  $Gapp::Notebook::VERSION = '0.60';
 }
 
 use Moose;

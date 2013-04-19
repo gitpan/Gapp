@@ -39,6 +39,7 @@ lib/Gapp/Dialog.pm
 lib/Gapp/Entry.pm
 lib/Gapp/EventBox.pm
 lib/Gapp/Expander.pm
+lib/Gapp/FileChooserButton.pm
 lib/Gapp/FileChooserDialog.pm
 lib/Gapp/FileFilter.pm
 lib/Gapp/Form/Context.pm
@@ -73,6 +74,7 @@ lib/Gapp/MenuToolButton.pm
 lib/Gapp/MessageDialog.pm
 lib/Gapp/Meta/Attribute/Trait/DefaultWidget.pm
 lib/Gapp/Meta/Widget/Native/Role/CanDefault.pm
+lib/Gapp/Meta/Widget/Native/Role/FileChooser.pm
 lib/Gapp/Meta/Widget/Native/Role/FormElement.pm
 lib/Gapp/Meta/Widget/Native/Role/FormField.pm
 lib/Gapp/Meta/Widget/Native/Role/HasAction.pm
@@ -89,6 +91,7 @@ lib/Gapp/Meta/Widget/Native/Trait/Form.pm
 lib/Gapp/Meta/Widget/Native/Trait/FromUIManager.pm
 lib/Gapp/Meta/Widget/Native/Trait/ListFormField.pm
 lib/Gapp/Meta/Widget/Native/Trait/NotebookPage.pm
+lib/Gapp/Meta/Widget/Native/Trait/Sensitivity.pm
 lib/Gapp/Meta/Widget/Native/Trait/ToggleListFormField.pm
 lib/Gapp/Model/List.pm
 lib/Gapp/Model/SimpleList.pm
@@ -106,6 +109,7 @@ lib/Gapp/Moose/Meta/Attribute/Trait/GappDialog.pm
 lib/Gapp/Moose/Meta/Attribute/Trait/GappEntry.pm
 lib/Gapp/Moose/Meta/Attribute/Trait/GappEventBox.pm
 lib/Gapp/Moose/Meta/Attribute/Trait/GappExpander.pm
+lib/Gapp/Moose/Meta/Attribute/Trait/GappFileChooserButton.pm
 lib/Gapp/Moose/Meta/Attribute/Trait/GappFileChooserDialog.pm
 lib/Gapp/Moose/Meta/Attribute/Trait/GappFileFilter.pm
 lib/Gapp/Moose/Meta/Attribute/Trait/GappFrame.pm

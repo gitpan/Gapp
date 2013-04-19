@@ -1,6 +1,6 @@
 package Gapp::Model::List;
 {
-  $Gapp::Model::List::VERSION = '0.494';
+  $Gapp::Model::List::VERSION = '0.60';
 }
 
 use Moose;

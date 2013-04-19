@@ -1,6 +1,6 @@
 package Gapp::Moose::Meta::Attribute::Trait::GappWindow;
 {
-  $Gapp::Moose::Meta::Attribute::Trait::GappWindow::VERSION = '0.494';
+  $Gapp::Moose::Meta::Attribute::Trait::GappWindow::VERSION = '0.60';
 }
 use Moose::Role;
 
@@ -11,7 +11,7 @@ before '_process_options' => sub {
 
 package Moose::Meta::Attribute::Custom::Trait::GappWindow;
 {
-  $Moose::Meta::Attribute::Custom::Trait::GappWindow::VERSION = '0.494';
+  $Moose::Meta::Attribute::Custom::Trait::GappWindow::VERSION = '0.60';
 }
 sub register_implementation { 'Gapp::Moose::Meta::Attribute::Trait::GappWindow' };
 1;

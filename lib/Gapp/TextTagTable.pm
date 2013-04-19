@@ -1,6 +1,6 @@
 package Gapp::TextTagTable;
 {
-  $Gapp::TextTagTable::VERSION = '0.494';
+  $Gapp::TextTagTable::VERSION = '0.60';
 }
 
 use Moose;

@@ -1,6 +1,6 @@
 package Gapp::Actions::Util;
 {
-  $Gapp::Actions::Util::VERSION = '0.494';
+  $Gapp::Actions::Util::VERSION = '0.60';
 }
 
 use Carp qw( carp );

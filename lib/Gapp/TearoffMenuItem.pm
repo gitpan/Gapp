@@ -1,6 +1,6 @@
 package Gapp::TearoffMenuItem;
 {
-  $Gapp::TearoffMenuItem::VERSION = '0.494';
+  $Gapp::TearoffMenuItem::VERSION = '0.60';
 }
 
 use Moose;
